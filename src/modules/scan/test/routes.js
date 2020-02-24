@@ -149,7 +149,7 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
-    it('should be scan get not use token', (done)=>{
+    xit('should be scan get not use token', (done)=>{
         request(app)
         .get('/api/scans')
         .expect(403)
@@ -160,7 +160,7 @@ describe('Scan CRUD routes tests', function () {
         .end(done);
     });
 
-    it('should be scan post not use token', function (done) {
+    xit('should be scan post not use token', function (done) {
 
         request(app)
             .post('/api/scans')
