@@ -4,14 +4,26 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
-var ScanSchema = new Schema({
-    finger_id: {
+var StudentSchema = new Schema({
+    firstname: {
         type: String,
-        required: 'Please fill a Scan finger_id1',
+        required: 'Please fill a Student firstname'
     },
-    timeScan:{
-        type: Number,
-        required: 'Please fill a Scan timeScan'
+    lastname: {
+        type: String,
+        required: 'Please fill a Student lastname'
+    },
+    finger_id1: {
+        type: String,
+        required: "Please"
+    },
+    finger_id2: {
+        type: String,
+        required: "Please"
+    },
+    group_name: {
+        type: String,
+        required: "Please"
     },
     created: {
         type: Date,
@@ -44,4 +56,4 @@ var ScanSchema = new Schema({
     }
 });
 
-mongoose.model("Scan", ScanSchema);
+mongoose.model("Student", StudentSchema);

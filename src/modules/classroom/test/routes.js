@@ -6,42 +6,25 @@ var request = require('supertest'),
     jwt = require('jsonwebtoken'),
     mongoose = require('mongoose'),
     app = require('../../../config/express'),
-    Scan = mongoose.model('Scan'),
-    Student = mongoose.model('Student'),
     Classroom = mongoose.model('Classroom');
 
 var credentials,
     token,
     mockup;
 
-describe('Scan CRUD routes tests', function () {
-    var datenow = Date.now();
+describe('Classroom CRUD routes tests', function () {
+
     before(function (done) {
         mockup = {
-            finger_id: '1',
-            timeScan: datenow
-        };
-        var student = new Student({
-            finger_id1: "1",
-            finger_id2: "2",
-            group_name: "CSS45941N",
-            firstname: "นาย ภูรี",
-            lastname: "ลิ้มสกุล"
-        })
-        student.save()
-
-        var classroom = new Classroom({
             roomid: "23901",
             year: "2564",
             term: "2",
             DayOfWeek: "จันทร์",
-            timestart: 8.17,
-            timeend: 11.30,
+            timestart: "8.30",
+            timeend: "11.30",
             subject: "คณิตศาสตร์",
             group_name: "CSS45941N"
-        })
-        classroom.save();
-
+        };
         credentials = {
             username: 'username',
             password: 'password',
@@ -56,24 +39,24 @@ describe('Scan CRUD routes tests', function () {
         done();
     });
 
-    it('should be Scan get use token', (done) => {
+    it('should be Classroom get use token', (done)=>{
         request(app)
-            .get('/api/scans')
-            .set('Authorization', 'Bearer ' + token)
-            .expect(200)
-            .end((err, res) => {
-                if (err) {
-                    return done(err);
-                }
-                var resp = res.body;
-                done();
-            });
+        .get('/api/classrooms')
+        .set('Authorization', 'Bearer ' + token)
+        .expect(200)
+        .end((err, res)=>{
+            if (err) {
+                return done(err);
+            }
+            var resp = res.body;
+            done();
+        });
     });
 
-    it('should be Scan get by id', function (done) {
+    it('should be Classroom get by id', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/classrooms')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -83,7 +66,7 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 request(app)
-                    .get('/api/scans/' + resp.data._id)
+                    .get('/api/classrooms/' + resp.data._id)
                     .set('Authorization', 'Bearer ' + token)
                     .expect(200)
                     .end(function (err, res) {
@@ -92,17 +75,16 @@ describe('Scan CRUD routes tests', function () {
                         }
                         var resp = res.body;
                         assert.equal(resp.status, 200);
-                        assert.equal(resp.data.finger_id, mockup.finger_id);
-                        assert.notEqual(resp.data.timeScan, null);
+                        assert.equal(resp.data.name, mockup.name);
                         done();
                     });
             });
 
     });
 
-    it('should be Scan post use token', (done) => {
+    it('should be Classroom post use token', (done)=>{
         request(app)
-            .post('/api/scans')
+            .post('/api/classrooms')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -116,10 +98,10 @@ describe('Scan CRUD routes tests', function () {
             });
     });
 
-    xit('should be scan put use token', function (done) {
+    it('should be classroom put use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/classrooms')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -129,10 +111,17 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 var update = {
-                    name: 'name update'
+                    roomid: "23901",
+                    year: "2564",
+                    term: "2",
+                    DayOfWeek: "จันทร์",
+                    timestart: "8.30",
+                    timeend: "11.30",
+                    subject: "คณิตศาสตร์",
+                    group_name: "CSS45941N"
                 }
                 request(app)
-                    .put('/api/scans/' + resp.data._id)
+                    .put('/api/classrooms/' + resp.data._id)
                     .set('Authorization', 'Bearer ' + token)
                     .send(update)
                     .expect(200)
@@ -141,18 +130,24 @@ describe('Scan CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
-                        assert.equal(resp.data.finger_id, mockup.finger_id);
-                        assert.notEqual(resp.data.timeScan, null);
+                        assert.equal(resp.data.roomid, update.roomid);
+                        assert.equal(resp.data.year, update.year);
+                        assert.equal(resp.data.term, update.term);
+                        assert.equal(resp.data.DayOfWeek, update.DayOfWeek);
+                        assert.equal(resp.data.timestart, update.timestart);
+                        assert.equal(resp.data.timeend, update.timeend);
+                        assert.equal(resp.data.subject, update.subject);
+                        assert.equal(resp.data.group_name, update.group_name);
                         done();
                     });
             });
 
     });
 
-    xit('should be scan delete use token', function (done) {
+    it('should be classroom delete use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/classrooms')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -162,7 +157,7 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 request(app)
-                    .delete('/api/scans/' + resp.data._id)
+                    .delete('/api/classrooms/' + resp.data._id)
                     .set('Authorization', 'Bearer ' + token)
                     .expect(200)
                     .end(done);
@@ -170,21 +165,21 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
-    xit('should be scan get not use token', (done) => {
+    it('should be classroom get not use token', (done)=>{
         request(app)
-            .get('/api/scans')
-            .expect(403)
-            .expect({
-                status: 403,
-                message: 'User is not authorized'
-            })
-            .end(done);
+        .get('/api/classrooms')
+        .expect(403)
+        .expect({
+            status: 403,
+            message: 'User is not authorized'
+        })
+        .end(done);
     });
 
-    xit('should be scan post not use token', function (done) {
+    it('should be classroom post not use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/classrooms')
             .send(mockup)
             .expect(403)
             .expect({
@@ -195,10 +190,10 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
-    xit('should be scan put not use token', function (done) {
+    it('should be classroom put not use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/classrooms')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -211,7 +206,7 @@ describe('Scan CRUD routes tests', function () {
                     name: 'name update'
                 }
                 request(app)
-                    .put('/api/scans/' + resp.data._id)
+                    .put('/api/classrooms/' + resp.data._id)
                     .send(update)
                     .expect(403)
                     .expect({
@@ -223,10 +218,10 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
-    xit('should be scan delete not use token', function (done) {
+    it('should be classroom delete not use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/classrooms')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -236,7 +231,7 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 request(app)
-                    .delete('/api/scans/' + resp.data._id)
+                    .delete('/api/classrooms/' + resp.data._id)
                     .expect(403)
                     .expect({
                         status: 403,
@@ -248,8 +243,7 @@ describe('Scan CRUD routes tests', function () {
     });
 
     afterEach(function (done) {
-        Scan.deleteMany().exec(done);
-       
+        Classroom.deleteMany().exec(done);
     });
 
 });
