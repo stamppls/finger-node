@@ -19,6 +19,7 @@ describe('Student CRUD routes tests', function () {
             finger_id1: "1",
             finger_id2: "2",
             group_name: "CSS45941N",
+            studentid: "459415241015",
             firstname: "นาย ภูรี",
             lastname: "ลิ้มสกุล"
         };

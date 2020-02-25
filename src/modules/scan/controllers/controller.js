@@ -145,20 +145,19 @@ exports.getClassByTime = function (req, res, next) {
     var hour = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getHours());
     var min = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getMinutes());
     var day = new Date().getDay();
-    var time = parseFloat(hour.toString() + "." + min.toString());
-    if(day == 1){
+    var timeNow = parseFloat(hour.toString() + "." + min.toString()).toFixed(2);
+
+    if (day == 1) {
         day = "จันทร์"
-    }else if(day == 2){
+    } else if (day == 2) {
         day = "อังคาร"
-    }else if(day == 3){
+    } else if (day == 3) {
         day = "พุธ"
-    }else if(day == 4){
+    } else if (day == 4) {
         day = "พฤหัสบดี"
-    }else{
+    } else {
         day = "ศุกร์"
     }
-
-    // console.log(day);
     Classroom.findOne({ group_name: req.student.group_name }, function (err, data) {
         if (err) {
             return res.status(400).send({
@@ -167,11 +166,12 @@ exports.getClassByTime = function (req, res, next) {
             })
         } else {
             if (data) {
-                // console.log("DayOfWeek: ",data.DayOfWeek);
-                // console.log("Day: ",day);
-                if (data.timestart < time && time > 8 && data.timeend > time && data.DayOfWeek === day || data.timestart < time && time > 13) {
+                var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
+                // console.log("before: ",timebeforstart);
+                // console.log("now: ",timeNow);
+                if (timeNow >= timebeforstart && timeNow <= data.timeend &&  data.DayOfWeek === day) {
                     req.classroom = data;
-                    console.log(req.classroom);
+                    // console.log(req.classroom);
                     next();
                 } else {
                     return res.status(400).send({

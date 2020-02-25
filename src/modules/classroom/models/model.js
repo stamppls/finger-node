@@ -22,11 +22,11 @@ var ClassroomSchema = new Schema({
         required: "Please DayOfWeek" 
     },
     timestart:{
-        type: Number,
+        type: String,
         required: "Please timestart" 
     },
     timeend:{
-        type: Number,
+        type: String,
         required: "Please timeend" 
     },
     subject:{

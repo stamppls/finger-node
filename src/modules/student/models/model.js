@@ -5,6 +5,10 @@ var Schema = mongoose.Schema;
 
 
 var StudentSchema = new Schema({
+    studentid:{
+      type: String,
+      required: 'Please fill a Student studentid'  
+    },
     firstname: {
         type: String,
         required: 'Please fill a Student firstname'
@@ -15,15 +19,15 @@ var StudentSchema = new Schema({
     },
     finger_id1: {
         type: String,
-        required: "Please"
+        required: 'Please fill a Student finger_id1'
     },
     finger_id2: {
         type: String,
-        required: "Please"
+        required: 'Please fill a Student finger_id2'
     },
     group_name: {
         type: String,
-        required: "Please"
+        required: 'Please fill a Student group_name'
     },
     created: {
         type: Date,
