@@ -144,9 +144,22 @@ exports.getExistStudent = function (req, res, next) {
 exports.getClassByTime = function (req, res, next) {
     var hour = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getHours());
     var min = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getMinutes());
+    var day = new Date().getDay();
     var time = parseFloat(hour.toString() + "." + min.toString());
-    console.log(time);
-    Classroom.findOne({ group_name: req.student.group_name },  function (err, data) {
+    if(day == 1){
+        day = "จันทร์"
+    }else if(day == 2){
+        day = "อังคาร"
+    }else if(day == 3){
+        day = "พุธ"
+    }else if(day == 4){
+        day = "พฤหัสบดี"
+    }else{
+        day = "ศุกร์"
+    }
+
+    // console.log(day);
+    Classroom.findOne({ group_name: req.student.group_name }, function (err, data) {
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -154,11 +167,18 @@ exports.getClassByTime = function (req, res, next) {
             })
         } else {
             if (data) {
-                req.classroom = data;
-                if(data.timestart < time){
+                // console.log("DayOfWeek: ",data.DayOfWeek);
+                // console.log("Day: ",day);
+                if (data.timestart < time && time > 8 && data.timeend > time && data.DayOfWeek === day || data.timestart < time && time > 13) {
+                    req.classroom = data;
                     console.log(req.classroom);
+                    next();
+                } else {
+                    return res.status(400).send({
+                        status: 400,
+                        message: "Time not found"
+                    })
                 }
-                next();
             } else {
                 return res.status(400).send({
                     status: 400,

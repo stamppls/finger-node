@@ -18,8 +18,7 @@ describe('Scan CRUD routes tests', function () {
     var datenow = Date.now();
     before(function (done) {
         mockup = {
-            finger_id: '1',
-            timeScan: datenow
+            finger_id: '1'
         };
         var student = new Student({
             finger_id1: "1",
@@ -34,9 +33,9 @@ describe('Scan CRUD routes tests', function () {
             roomid: "23901",
             year: "2564",
             term: "2",
-            DayOfWeek: "จันทร์",
-            timestart: 8.17,
-            timeend: 11.30,
+            DayOfWeek: "อังคาร",
+            timestart:8.00,
+            timeend: 11.00,
             subject: "คณิตศาสตร์",
             group_name: "CSS45941N"
         })
