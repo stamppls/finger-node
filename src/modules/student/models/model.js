@@ -5,9 +5,9 @@ var Schema = mongoose.Schema;
 
 
 var StudentSchema = new Schema({
-    studentid:{
-      type: String,
-      required: 'Please fill a Student studentid'  
+    studentid: {
+        type: String,
+        required: 'Please fill a Student studentid'
     },
     firstname: {
         type: String,
