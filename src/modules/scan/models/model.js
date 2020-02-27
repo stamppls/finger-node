@@ -11,11 +11,11 @@ var ScanSchema = new Schema({
     },
     time: {
         type: String,
-        required: 'Please fill a Scan finger_id',
+        required: 'Please fill a Scan time',
     },
     date: {
         type: String,
-        required: 'Please fill a Scan finger_id',
+        required: 'Please fill a Scan time',
     },
     created: {
         type: Date,

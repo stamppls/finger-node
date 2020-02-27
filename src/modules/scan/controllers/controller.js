@@ -43,6 +43,7 @@ exports.create = function (req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
+            console.log(data);
             res.jsonp({
                 status: 200,
                 data: data,
@@ -181,7 +182,8 @@ exports.getClassByTime = function (req, res, next) {
                         time: timeNow,
                         date: dateNow
                     }
-                    req.body = ScanNew
+                    // console.log(ScanNew);
+                    req.body = ScanNew;
                     req.classroom = data;
                     next();
                 } else {

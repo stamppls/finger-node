@@ -18,12 +18,12 @@ var credentials,
 describe('Scan CRUD routes tests', function () {
     before(function (done) {
         mockup = {
-            finger_id: '1',
+            finger_id: "3",
         };
 
         var student = new Student({
-            finger_id1: "1",
-            finger_id2: "2",
+            finger_id1: "3",
+            finger_id2: "4",
             group_name: "CSS45941N",
             studentid: "459415241015",
             firstname: "นาย ภูรี",
@@ -36,8 +36,8 @@ describe('Scan CRUD routes tests', function () {
             year: "2564",
             term: "2",
             DayOfWeek: "พฤหัสบดี",
-            timestart: "8.30",
-            timeend: "24.00",
+            timestart: "13.00",
+            timeend: "17.00",
             subject: "คณิตศาสตร์",
             group_name: "CSS45941N"
         })
