@@ -13,7 +13,7 @@ module.exports = function (app) {
             controller.create)
             // controller.updateReport;
 
-    app.route(urlWithParam).all(policy.isAllowed)
+    app.route(urlWithParam)//.all(policy.isAllowed)
         .get(controller.read)
         .put(controller.update)
         .delete(controller.delete);
