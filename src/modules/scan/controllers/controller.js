@@ -43,7 +43,7 @@ exports.create = function (req, res) {
                 status: 400,
                 message: errorHandler.getErrorMessage(err)
             });
-        } else { 
+        } else {
             res.jsonp({
                 status: 200,
                 data: data,
@@ -129,7 +129,7 @@ exports.getExistStudent = function (req, res, next) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            if (data) { 
+            if (data) {
                 req.student = data;
                 next();
             } else {
@@ -143,17 +143,24 @@ exports.getExistStudent = function (req, res, next) {
 }
 
 exports.getClassByTime = function (req, res, next) {
-    var hour = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getHours());
-    var min = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getMinutes());
+    var asiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
+    var bkkHourNow = new Date(new Date(asiaTime).getTime()).getHours();
+    var bkkMinNow = new Date(new Date(asiaTime).getTime()).getMinutes();
+    var bkkTimeNow = parseFloat(bkkHourNow.toString() + "." + bkkMinNow.toString());
+    // console.log(bkkTimeNow);
 
-    var date = new Date();
-    var DayOfWeek = date.getDay();
+    var bkkDateNow = new Date(asiaTime);
+    var DayOfWeek = bkkDateNow.getDay();
 
-    var day = date.getDate(); //days from month 1-31
-    var month = date.getUTCMonth() + 1; //months from 1-12
-    var year = date.getUTCFullYear(); //year
-    var dateNow = day + "/" + month + "/" + year;
-    var timeNow = parseFloat(hour.toString() + "." + min.toString());
+    var bkkday = bkkDateNow.getDate();
+    var bkkmonth = bkkDateNow.getUTCMonth() + 1;
+    var bkkyear = bkkDateNow.getUTCFullYear();
+    var datebkkNow = bkkday + "/" + bkkmonth + "/" + bkkyear;
+    // console.log(datebkkNow);
+    // console.log(DayOfWeek);
+
+    // var bkkDateNow = new Date(asiaTime);
+    // console.log(bkkDateNow);
 
     if (DayOfWeek == 1) {
         DayOfWeek = "จันทร์"
@@ -166,7 +173,6 @@ exports.getClassByTime = function (req, res, next) {
     } else {
         DayOfWeek = "ศุกร์"
     }
-    console.log(DayOfWeek);
     Classroom.findOne({ group_name: req.student.group_name }, function (err, data) {
         if (err) {
             return res.status(400).send({
@@ -177,12 +183,13 @@ exports.getClassByTime = function (req, res, next) {
             if (data) {
                 var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
                 var timeend = parseFloat(data.timeend);
-                if (timeNow >= timebeforstart && timeNow <= timeend && data.DayOfWeek === DayOfWeek) {
+                if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                     var ScanNew = {
                         finger_id: req.body.finger_id,
-                        time: timeNow,
-                        date: dateNow
+                        time: bkkTimeNow,
+                        date: datebkkNow
                     }
+                    console.log(ScanNew);
                     req.body = ScanNew;
                     req.classroom = data;
                     next();

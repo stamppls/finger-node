@@ -73,7 +73,12 @@ describe('Student CRUD routes tests', function () {
                         }
                         var resp = res.body;
                         assert.equal(resp.status, 200);
-                        assert.equal(resp.data.name, mockup.name);
+                        assert.equal(resp.data.finger_id1, mockup.finger_id1);
+                        assert.equal(resp.data.finger_id2, mockup.finger_id2);
+                        assert.equal(resp.data.group_name, mockup.group_name);
+                        assert.equal(resp.data.studentid, mockup.studentid);
+                        assert.equal(resp.data.firstname, mockup.firstname);
+                        assert.equal(resp.data.lastname, mockup.lastname);
                         done();
                     });
             });
@@ -91,7 +96,12 @@ describe('Student CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
-                assert.equal(resp.data.name, mockup.name);
+                assert.equal(resp.data.finger_id1, mockup.finger_id1);
+                assert.equal(resp.data.finger_id2, mockup.finger_id2);
+                assert.equal(resp.data.group_name, mockup.group_name);
+                assert.equal(resp.data.studentid, mockup.studentid);
+                assert.equal(resp.data.firstname, mockup.firstname);
+                assert.equal(resp.data.lastname, mockup.lastname);
                 done();
             });
     });
@@ -109,7 +119,12 @@ describe('Student CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 var update = {
-                    firstname: 'name update'
+                    finger_id1: "3",
+                    finger_id2: "4",
+                    group_name: "ITS45941N",
+                    studentid: "459415241005",
+                    firstname: "นางสาว ณัฐณิชา",
+                    lastname: "สาริยัง"
                 }
                 request(app)
                     .put('/api/students/' + resp.data._id)
@@ -121,7 +136,12 @@ describe('Student CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
+                        assert.equal(resp.data.finger_id1, update.finger_id1);
+                        assert.equal(resp.data.finger_id2, update.finger_id2);
+                        assert.equal(resp.data.group_name, update.group_name);
+                        assert.equal(resp.data.studentid, update.studentid);
                         assert.equal(resp.data.firstname, update.firstname);
+                        assert.equal(resp.data.lastname, update.lastname);
                         done();
                     });
             });
