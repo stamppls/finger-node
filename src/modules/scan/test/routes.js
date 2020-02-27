@@ -16,11 +16,11 @@ var credentials,
     mockup;
 
 describe('Scan CRUD routes tests', function () {
-    var datenow = Date.now();
     before(function (done) {
         mockup = {
-            finger_id: '1'
+            finger_id: '1',
         };
+
         var student = new Student({
             finger_id1: "1",
             finger_id2: "2",
@@ -29,42 +29,19 @@ describe('Scan CRUD routes tests', function () {
             firstname: "นาย ภูรี",
             lastname: "ลิ้มสกุล"
         })
-        student.save()
+        student.save();
 
         var classroom = new Classroom({
             roomid: "23901",
             year: "2564",
             term: "2",
-            DayOfWeek: "อังคาร",
-            timestart: "23.30",
+            DayOfWeek: "พฤหัสบดี",
+            timestart: "8.30",
             timeend: "24.00",
             subject: "คณิตศาสตร์",
             group_name: "CSS45941N"
         })
         classroom.save();
-
-        var reportcheck = new Reportcheck({
-            roomid: "23901",
-            year: "2564",
-            term: "2",
-            student: [
-                {
-                    studentid: "459415241015",
-                    firstname: "นาย ภูรี",
-                    lastname: "ลิ้มสกุล",
-                    check: [
-                        {
-                            timecheck: "7.4"
-                        }
-                    ]
-                }
-            ],
-            timestart: "8.30",
-            timeend: "11.0",
-            subject: "คณิตศาสตร์",
-            group_name: "CSS45941N"
-        })
-        reportcheck.update();
 
         credentials = {
             username: 'username',
@@ -117,7 +94,8 @@ describe('Scan CRUD routes tests', function () {
                         var resp = res.body;
                         assert.equal(resp.status, 200);
                         assert.equal(resp.data.finger_id, mockup.finger_id);
-                        assert.notEqual(resp.data.timeScan, null);
+                        assert.notEqual(resp.data.time, null);
+                        assert.notEqual(resp.data.date, null);
                         done();
                     });
             });
@@ -135,7 +113,7 @@ describe('Scan CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
-                assert.equal(resp.data.name, mockup.name);
+                assert.equal(resp.data.finger_id, mockup.finger_id);
                 done();
             });
     });
@@ -273,7 +251,6 @@ describe('Scan CRUD routes tests', function () {
 
     afterEach(function (done) {
         Scan.deleteMany().exec(done);
-
     });
 
 });

@@ -33,10 +33,9 @@ exports.getList = function (req, res) {
     });
 };
 
-exports.createReportGroup = function (req, res) {
+exports.create = function (req, res) {
     var newScan = new Scan(req.body);
     newScan.createby = req.user;
-    newScan.timeScan = Date.now();
     newScan.save(function (err, data) {
         if (err) {
             return res.status(400).send({
@@ -46,7 +45,7 @@ exports.createReportGroup = function (req, res) {
         } else {
             res.jsonp({
                 status: 200,
-                data: data
+                data: data,
             });
             /**
              * Message Queue
@@ -121,6 +120,7 @@ exports.delete = function (req, res) {
 };
 
 exports.getExistStudent = function (req, res, next) {
+    // console.log("getExistStudent")
     Student.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }] }, function (err, data) {
         if (err) {
             return res.status(400).send({
@@ -128,7 +128,7 @@ exports.getExistStudent = function (req, res, next) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            if (data) {
+            if (data) { 
                 req.student = data;
                 next();
             } else {
@@ -144,19 +144,26 @@ exports.getExistStudent = function (req, res, next) {
 exports.getClassByTime = function (req, res, next) {
     var hour = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getHours());
     var min = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getMinutes());
-    var day = new Date().getDay();
-    var timeNow = parseFloat(hour.toString() + "." + min.toString()).toFixed(2);
 
-    if (day == 1) {
-        day = "จันทร์"
-    } else if (day == 2) {
-        day = "อังคาร"
-    } else if (day == 3) {
-        day = "พุธ"
-    } else if (day == 4) {
-        day = "พฤหัสบดี"
+    var date = new Date();
+    var DayOfWeek = date.getDay();
+
+    var day = date.getDate(); //days from month 1-31
+    var month = date.getUTCMonth() + 1; //months from 1-12
+    var year = date.getUTCFullYear(); //year
+    var dateNow = day + "/" + month + "/" + year;
+    var timeNow = parseFloat(hour.toString() + "." + min.toString());
+
+    if (DayOfWeek == 1) {
+        DayOfWeek = "จันทร์"
+    } else if (DayOfWeek == 2) {
+        DayOfWeek = "อังคาร"
+    } else if (DayOfWeek == 3) {
+        DayOfWeek = "พุธ"
+    } else if (DayOfWeek == 4) {
+        DayOfWeek = "พฤหัสบดี"
     } else {
-        day = "ศุกร์"
+        DayOfWeek = "ศุกร์"
     }
     Classroom.findOne({ group_name: req.student.group_name }, function (err, data) {
         if (err) {
@@ -167,11 +174,15 @@ exports.getClassByTime = function (req, res, next) {
         } else {
             if (data) {
                 var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
-                // console.log("before: ",timebeforstart);
-                // console.log("now: ",timeNow);
-                if (timeNow >= timebeforstart && timeNow <= data.timeend &&  data.DayOfWeek === day) {
+                var timeend = parseFloat(data.timeend);
+                if (timeNow >= timebeforstart && timeNow <= timeend && data.DayOfWeek === DayOfWeek) {
+                    var ScanNew = {
+                        finger_id: req.body.finger_id,
+                        time: timeNow,
+                        date: dateNow
+                    }
+                    req.body = ScanNew
                     req.classroom = data;
-                    // console.log(req.classroom);
                     next();
                 } else {
                     return res.status(400).send({
@@ -188,3 +199,7 @@ exports.getClassByTime = function (req, res, next) {
         }
     })
 }
+
+// exports.updateReport = function (req, res) {
+//     console.log("Update !!");
+// }

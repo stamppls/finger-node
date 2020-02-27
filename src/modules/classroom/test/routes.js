@@ -21,7 +21,7 @@ describe('Classroom CRUD routes tests', function () {
             term: "2",
             DayOfWeek: "จันทร์",
             timestart: "8.30",
-            timeend: "11.30",
+            timeend: "24.00",
             subject: "คณิตศาสตร์",
             group_name: "CSS45941N"
         };
@@ -75,7 +75,14 @@ describe('Classroom CRUD routes tests', function () {
                         }
                         var resp = res.body;
                         assert.equal(resp.status, 200);
-                        assert.equal(resp.data.name, mockup.name);
+                        assert.equal(resp.data.roomid, mockup.roomid);
+                        assert.equal(resp.data.year, mockup.year);
+                        assert.equal(resp.data.term, mockup.term);
+                        assert.equal(resp.data.DayOfWeek, mockup.DayOfWeek);
+                        assert.equal(resp.data.timestart, mockup.timestart);
+                        assert.equal(resp.data.timeend, mockup.timeend);
+                        assert.equal(resp.data.subject, mockup.subject);
+                        assert.equal(resp.data.group_name, mockup.group_name);
                         done();
                     });
             });
@@ -114,9 +121,39 @@ describe('Classroom CRUD routes tests', function () {
                     roomid: "23901",
                     year: "2564",
                     term: "2",
-                    DayOfWeek: "จันทร์",
+                    student: [
+                        {
+                            studentid: "459415241015",
+                            firstname: "นาย ภูรี",
+                            lastname: "ลิ้มสกุล",
+                            timeScan: [
+                                {
+                                    time: "7.45"
+                                },
+                                {
+                                    time: "7.59"
+                                }
+                            ]
+                        },
+                        {
+                            studentid: "459415241015",
+                            firstname: "นาง ณัฐนิชา",
+                            lastname: "สาริยัง",
+                            timeScan: [
+                                {
+                                    time: "7.30",
+                                    date: "1/1/2563"
+                                },
+                                {
+                                    time: "8.23",
+                                    date: "8/1/2563"
+                                }
+                            ]
+                        }
+                    ],
+                    DayOfWeek: "อังคาร",
                     timestart: "8.30",
-                    timeend: "11.30",
+                    timeend: "11.0",
                     subject: "คณิตศาสตร์",
                     group_name: "CSS45941N"
                 }

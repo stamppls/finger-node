@@ -16,7 +16,46 @@ describe('Reportcheck CRUD routes tests', function () {
 
     before(function (done) {
         mockup = {
-            name: 'name'
+            roomid: "23901",
+            year: "2564",
+            term: "2",
+            student: [
+                {
+                    studentid: "459415241015",
+                    firstname: "นาย ภูรี",
+                    lastname: "ลิ้มสกุล",
+                    timeScan: [
+                        {
+                            time: "7.45",
+                            date: "1/1/2563"
+                        },
+                        {
+                            time: "7.59",
+                            date: "8/1/2563"
+                        }
+                    ]
+                },
+                {
+                    studentid: "459415241015",
+                    firstname: "นาง ณัฐนิชา",
+                    lastname: "สาริยัง",
+                    timeScan: [
+                        {
+                            time: "7.30",
+                            date: "1/1/2563"
+                        },
+                        {
+                            time: "8.23",
+                            date: "8/1/2563"
+                        }
+                    ]
+                }
+            ],
+            DayOfWeek: "อังคาร",
+            timestart: "8.30",
+            timeend: "11.30",
+            subject: "คณิตศาสตร์",
+            group_name: "CSS45941N"
         };
         credentials = {
             username: 'username',
@@ -104,7 +143,46 @@ describe('Reportcheck CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 var update = {
-                    name: 'name update'
+                    roomid: "23901",
+                    year: "2564",
+                    term: "2",
+                    student: [
+                        {
+                            studentid: "459415241015",
+                            firstname: "นาย ภูรี",
+                            lastname: "ลิ้มสกุล",
+                            timeScan: [
+                                {
+                                    time: "7.45",
+                                    date: "1/1/2563"
+                                },
+                                {
+                                    time: "7.59",
+                                    date: "8/1/2563"
+                                }
+                            ]
+                        },
+                        {
+                            studentid: "459415241015",
+                            firstname: "นาง ณัฐนิชา",
+                            lastname: "สาริยัง",
+                            timeScan: [
+                                {
+                                    time: "7.30",
+                                    date: "1/1/2563"
+                                },
+                                {
+                                    time: "8.23",
+                                    date: "8/1/2563"
+                                }
+                            ]
+                        }
+                    ],
+                    DayOfWeek: "อังคาร",
+                    timestart: "8.30",
+                    timeend: "11.30",
+                    subject: "คณิตศาสตร์",
+                    group_name: "CSS45941N"
                 }
                 request(app)
                     .put('/api/reportchecks/' + resp.data._id)

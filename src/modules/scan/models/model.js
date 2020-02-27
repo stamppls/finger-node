@@ -7,11 +7,15 @@ var Schema = mongoose.Schema;
 var ScanSchema = new Schema({
     finger_id: {
         type: String,
-        required: 'Please fill a Scan finger_id1',
+        required: 'Please fill a Scan finger_id',
     },
-    timeScan:{
-        type: Number,
-        required: 'Please fill a Scan timeScan'
+    time: {
+        type: String,
+        required: 'Please fill a Scan finger_id',
+    },
+    date: {
+        type: String,
+        required: 'Please fill a Scan finger_id',
     },
     created: {
         type: Date,

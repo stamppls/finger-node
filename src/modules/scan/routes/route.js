@@ -8,9 +8,11 @@ module.exports = function (app) {
     app.route(url)//.all(policy.isAllowed)
         .get(controller.getList)
         .post(
+
             controller.getExistStudent,
             controller.getClassByTime,
-            controller.createReportGroup);
+            controller.create)
+            // controller.updateReport;
 
     app.route(urlWithParam).all(policy.isAllowed)
         .get(controller.read)
