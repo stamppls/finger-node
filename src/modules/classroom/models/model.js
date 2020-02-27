@@ -10,7 +10,7 @@ var ClassroomSchema = new Schema({
         required: "Please roomid"
     },
     year:{
-        type: Number,
+        type: String,
         required: "Please year"
     },
     term:{
