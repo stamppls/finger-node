@@ -21,7 +21,7 @@ describe('Classroom CRUD routes tests', function () {
             term: "2",
             DayOfWeek: "จันทร์",
             timestart: "8.30",
-            timeend: "24.00",
+            timeend: "12.00",
             subject: "คณิตศาสตร์",
             group_name: "CSS45941N"
         };

@@ -5,7 +5,7 @@ var controller = require('../controllers/controller'),
 module.exports = function (app) {
     var url = '/api/students';
     var urlWithParam = '/api/students/:studentId';
-    app.route(url)//.all(policy.isAllowed)
+    app.route(url).all(policy.isAllowed)
         .get(controller.getList)
         .post(controller.create);
 
