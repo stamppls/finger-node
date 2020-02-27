@@ -35,6 +35,7 @@ exports.getList = function (req, res) {
 
 exports.create = function (req, res) {
     var newScan = new Scan(req.body);
+    // console.log(newScan);
     newScan.createby = req.user;
     newScan.save(function (err, data) {
         if (err) {
@@ -42,8 +43,7 @@ exports.create = function (req, res) {
                 status: 400,
                 message: errorHandler.getErrorMessage(err)
             });
-        } else {
-            console.log(data);
+        } else { 
             res.jsonp({
                 status: 200,
                 data: data,
@@ -166,6 +166,7 @@ exports.getClassByTime = function (req, res, next) {
     } else {
         DayOfWeek = "ศุกร์"
     }
+    console.log(DayOfWeek);
     Classroom.findOne({ group_name: req.student.group_name }, function (err, data) {
         if (err) {
             return res.status(400).send({
@@ -182,7 +183,6 @@ exports.getClassByTime = function (req, res, next) {
                         time: timeNow,
                         date: dateNow
                     }
-                    // console.log(ScanNew);
                     req.body = ScanNew;
                     req.classroom = data;
                     next();

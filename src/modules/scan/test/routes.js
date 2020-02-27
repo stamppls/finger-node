@@ -37,7 +37,7 @@ describe('Scan CRUD routes tests', function () {
             term: "2",
             DayOfWeek: "พฤหัสบดี",
             timestart: "13.00",
-            timeend: "17.00",
+            timeend: "24.00",
             subject: "คณิตศาสตร์",
             group_name: "CSS45941N"
         })
