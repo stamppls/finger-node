@@ -35,7 +35,6 @@ exports.getList = function (req, res) {
 
 exports.create = function (req, res) {
     var newScan = new Scan(req.body);
-    // console.log(newScan);
     newScan.createby = req.user;
     newScan.save(function (err, data) {
         if (err) {
@@ -195,7 +194,6 @@ exports.getClassByTime = function (req, res, next) {
                         time: bkkTimeNow,
                         date: datebkkNow
                     }
-                    console.log(ScanNew);
                     req.body = ScanNew;
                     req.classroom = data;
                     next();
@@ -215,6 +213,3 @@ exports.getClassByTime = function (req, res, next) {
     })
 }
 
-// exports.updateReport = function (req, res) {
-//     console.log("Update !!");
-// }

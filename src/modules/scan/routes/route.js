@@ -5,13 +5,12 @@ var controller = require('../controllers/controller'),
 module.exports = function (app) {
     var url = '/api/scans';
     var urlWithParam = '/api/scans/:scanId';
-    app.route(url).all(policy.isAllowed)
+    app.route(url)//.all(policy.isAllowed)
         .get(controller.getList)
         .post(
             controller.getExistStudent,
             controller.getClassByTime,
             controller.create)
-            // controller.updateReport;
 
     app.route(urlWithParam).all(policy.isAllowed)
         .get(controller.read)
