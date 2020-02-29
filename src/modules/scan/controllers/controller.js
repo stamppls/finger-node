@@ -175,9 +175,14 @@ exports.getClassByTime = function (req, res, next) {
         DayOfWeek = "พุธ"
     } else if (DayOfWeek == 4) {
         DayOfWeek = "พฤหัสบดี"
-    } else {
+    } else if(DayOfWeek == 5){
         DayOfWeek = "ศุกร์"
+    }else if(DayOfWeek == 6){
+        DayOfWeek = "เสาร์"
+    }else{
+        DayOfWeek = "อาทิตย์"
     }
+
     Classroom.findOne({ group_name: req.student.group_name }, function (err, data) {
         if (err) {
             return res.status(400).send({
