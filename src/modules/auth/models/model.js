@@ -13,6 +13,9 @@ var AuthSchema = new Schema({
         type: String,
         required: 'Please fill a Auth password',
     },
+    loginToken: {
+        type: String
+    },
     created: {
         type: Date,
         default: Date.now

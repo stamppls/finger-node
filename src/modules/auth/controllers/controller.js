@@ -4,7 +4,9 @@ var mongoose = require('mongoose'),
     mq = require('../../core/controllers/rabbitmq'),
     Auth = mongoose.model('Auth'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
-    _ = require('lodash');
+    jwt = require("jsonwebtoken"),
+    _ = require('lodash'),
+    config = require("../../../config/config");
 
 exports.getList = function (req, res) {
     var pageNo = parseInt(req.query.pageNo);
@@ -138,24 +140,38 @@ exports.UserDupicate = function (req, res, next) {
     })
 }
 
-// exports.CreateUser = function (req, res){
-//     var newAuth = new Auth(req.body);
-//     newAuth.createby = req.user;
-//     newAuth.save(function (err, data) {
-//         if (err) {
-//             return res.status(400).send({
-//                 status: 400,
-//                 message: errorHandler.getErrorMessage(err)
-//             });
-//         } else {
-//             res.jsonp({
-//                 status: 200,
-//                 data: data
-//             });
-//             /**
-//              * Message Queue
-//              */
-//             // mq.publish('exchange', 'keymsg', JSON.stringify(newOrder));
-//         };
-//     });
-// }
+exports.signin = function (req, res, next) {
+    Auth.findOne({ password: req.body.password }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            if (data) {
+                req.user = data;
+                next();
+            } else {
+                return res.status(400).send({
+                    status: 400,
+                    message: "Username or Password not Match!!"
+                })
+            }
+        }
+    })
+}
+
+exports.token = function (req, res) {
+    var user = req.user;
+    user.password = undefined;
+    user.loginToken = "";
+    user.loginToken = jwt.sign(_.omit(user, "password"), config.jwt.secret, {
+      expiresIn: 2 * 60 * 60 * 1000
+    });
+    user.loginExpires = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
+    // return res.jsonp(user);
+    res.jsonp({
+      status: 200,
+      token: user.loginToken
+    });
+};

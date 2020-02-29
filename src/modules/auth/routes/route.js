@@ -7,7 +7,7 @@ module.exports = function (app) {
     var urlWithParam = '/api/auths/:authId';
     app.route(url)//.all(policy.isAllowed)
         .get(controller.getList)
-        .post(controller.UserDupicate,controller.create);
+        .post(controller.UserDupicate, controller.create);
 
     app.route(urlWithParam).all(policy.isAllowed)
         .get(controller.read)
@@ -16,6 +16,7 @@ module.exports = function (app) {
 
     app.param('authId', controller.getByID);
 
+    app.route('/api/auth/signin').post(controller.signin, controller.token);
     /**
      * Message Queue
      * exchange : ชื่อเครือข่ายไปรษณีย์  เช่น casan
