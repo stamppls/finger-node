@@ -19,12 +19,11 @@ describe('Auth CRUD routes tests', function () {
             username: 'admin02',
             password: 'admin02'
         };
-
-        var user = new Auth({
+        var auth = new Auth({
             username: 'admin01',
             password: 'admin01'
         });
-        user.save();
+        auth.save();
         done();
     });
 
@@ -222,9 +221,13 @@ describe('Auth CRUD routes tests', function () {
     });
 
     it('should be signup post use token', (done) => {
+        var mockupregis = {
+            username: 'admin02',
+            password: 'admin02'
+        }
         request(app)
             .post('/api/auth/signup')
-            .send(mockup)
+            .send(mockupregis)
             .expect(200)
             .end(function (err, res) {
                 if (err) {
@@ -232,18 +235,13 @@ describe('Auth CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 assert.equal(resp.status, 200);
-                assert.equal(resp.data.username, mockup.username);
-                assert.equal(resp.data.password, mockup.password);
+                assert.equal(resp.data.username, mockupregis.username);
+                assert.equal(resp.data.password, mockupregis.password);
                 done();
             });
     });
 
-    it('should be signin post use token', (done) => {
-        var login = new Auth({
-            username: 'admin01',
-            password: 'admin01'
-        });
-        login.save();
+    xit('should be signin post use token', (done) => {
         var mockuplogin = {
             username: 'admin01',
             password: 'admin01'
@@ -258,6 +256,8 @@ describe('Auth CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 assert.equal(resp.status, 200);
+                assert.equal(resp.data.username, mockupregis.username);
+                assert.equal(resp.data.password, mockupregis.password);
                 assert.notEqual(resp.token, null);
                 done();
             });

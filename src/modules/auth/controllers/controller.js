@@ -149,32 +149,37 @@ exports.signup = function (req, res) {
 };
 
 exports.signin = function (req, res, next) {
-    Auth.findOne({ username: req.body.username, password: req.body.password}, function (err, data) {
-        if (err) {
-            return res.status(400).send({
-                status: 400,
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            if (data) {
-                req.user = data;
-                next();
-            }
-        }
-    })
+    // console.log(req.body);
+    // Auth.findOne({username: req.body.username}, function(err, data){
+    //     console.log(data)
+    // })
+    // Auth.findOne({ username: req.body.username, password: req.body.password}, function (err, data) {
+    //     console.log(data);
+    //     if (err) {
+    //         return res.status(400).send({
+    //             status: 400,
+    //             message: errorHandler.getErrorMessage(err)
+    //         });
+    //     } else {
+    //         if (data) {
+    //             req.user = data;
+    //             next();
+    //         }
+    //     }
+    // })
 };
 
 exports.token = function (req, res) {
-    var user = req.user;
-    user.password = undefined;
-    user.loginToken = "";
-    user.loginToken = jwt.sign(_.omit(user, "password"), config.jwt.secret, {
-        expiresIn: 2 * 60 * 60 * 1000
-    });
-    user.loginExpires = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
-    // return res.jsonp(user);
-    res.jsonp({
-        status: 200,
-        token: user.loginToken
-    });
+    // var user = req.user;
+    // user.password = undefined;
+    // user.loginToken = "";
+    // user.loginToken = jwt.sign(_.omit(user, "password"), config.jwt.secret, {
+    //     expiresIn: 2 * 60 * 60 * 1000
+    // });
+    // user.loginExpires = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
+    // // return res.jsonp(user);
+    // res.jsonp({
+    //     status: 200,
+    //     token: user.loginToken
+    // });
 };
