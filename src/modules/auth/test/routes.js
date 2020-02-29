@@ -87,7 +87,8 @@ describe('Auth CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
-                assert.equal(resp.data.name, mockup.name);
+                assert.equal(resp.data.username, mockup.username);
+                assert.equal(resp.data.password, mockup.password);
                 done();
             });
     });
@@ -224,7 +225,7 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    it('should be Auth signup use token', (done)=>{
+    xit('should be Auth signup use token', (done)=>{
         request(app)
             .post('/api/auth/signup')
             .send(mockup)

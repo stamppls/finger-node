@@ -33,7 +33,7 @@ exports.getList = function (req, res) {
 
 exports.create = function (req, res) {
     var newAuth = new Auth(req.body);
-    newAuth.createby = req.user;
+    // newAuth.createby = req.user;
     newAuth.save(function (err, data) {
         if (err) {
             return res.status(400).send({
