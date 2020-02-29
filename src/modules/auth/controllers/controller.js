@@ -4,7 +4,9 @@ var mongoose = require('mongoose'),
     mq = require('../../core/controllers/rabbitmq'),
     Auth = mongoose.model('Auth'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
-    _ = require('lodash');
+    jwt = require("jsonwebtoken"),
+    _ = require('lodash'),
+    config = require("../../../config/config");
 
 exports.getList = function (req, res) {
     var pageNo = parseInt(req.query.pageNo);
@@ -117,38 +119,37 @@ exports.delete = function (req, res) {
     });
 };
 
-exports.signup = function (req, res, next) {
-    // For security measurement we remove the roles from the req.body object
-    delete req.body.roles;
-
-    var user = new Auth(req.body);
-    // // Add missing user fields
-    // user.provider = user.provider ? user.provider : "local";
-    // user.displayname = user.firstname + " " + user.lastname;
-
-    /**
-     * กรณี Owner จะส่ง Ref1 & Ref2
-     */
-    // if (user.ref1 && user.ref2) {
-    //   user.roles = ["owner"];
-    // }
-
-    // Then save the user
-    user.save(function (err, resUser) {
-        if (err) {
+exports.signup = function (req, res) {
+    Auth.findOne({ username: req.body.username }, function (err, user) {
+        if (err || user) {
             return res.status(400).send({
                 status: 400,
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            req.user = resUser;
-            next();
+            if (!user) {
+                var user = new Auth(req.body);
+                user.save(function (err, resUser) {
+                    if (err) {
+                        return res.status(400).send({
+                            status: 400,
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        resUser
+                        res.jsonp({
+                            status: 200,
+                            data: resUser
+                        });
+                    }
+                });
+            }
         }
-    });
+    })
 };
 
 exports.signin = function (req, res, next) {
-    Auth.findOne({ username: req.body.username, password: req.body.password }, function (err, data) {
+    Auth.findOne({ username: req.body.username, password: req.body.password}, function (err, data) {
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -158,11 +159,6 @@ exports.signin = function (req, res, next) {
             if (data) {
                 req.user = data;
                 next();
-            } else {
-                return res.status(400).send({
-                    status: 400,
-                    message: "User or password Not Found!!"
-                })
             }
         }
     })
@@ -171,23 +167,6 @@ exports.signin = function (req, res, next) {
 exports.token = function (req, res) {
     var user = req.user;
     user.password = undefined;
-    user.salt = undefined;
-    user.loginToken = "";
-    user.loginToken = jwt.sign(_.omit(user, "password"), config.jwt.secret, {
-        expiresIn: 2 * 60 * 60 * 1000
-    });
-    user.loginExpires = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
-    // return res.jsonp(user);
-    res.jsonp({
-        status: 200,
-        token: user.loginToken
-    });
-};
-
-exports.token = function (req, res) {
-    var user = req.user;
-    user.password = undefined;
-    user.salt = undefined;
     user.loginToken = "";
     user.loginToken = jwt.sign(_.omit(user, "password"), config.jwt.secret, {
         expiresIn: 2 * 60 * 60 * 1000

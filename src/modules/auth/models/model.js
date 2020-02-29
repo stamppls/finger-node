@@ -11,6 +11,12 @@ var AuthSchema = new Schema({
     password: {
         type: String,
     },
+    loginToken: {
+        type: String
+    },
+    loginExpires: {
+        type: Date
+    },
     created: {
         type: Date,
         default: Date.now
