@@ -7,7 +7,9 @@ module.exports = function (app) {
     var urlWithParam = '/api/auths/:authId';
     app.route(url).all(policy.isAllowed)
         .get(controller.getList)
-        .post(controller.create);
+        .post(
+            controller.UserDupicate,
+            controller.create);
 
     app.route(urlWithParam).all(policy.isAllowed)
         .get(controller.read)
@@ -15,8 +17,6 @@ module.exports = function (app) {
         .delete(controller.delete);
 
     app.param('authId', controller.getByID);
-
-    app.route('/api/auth/signup').post(controller.UserDupicate, controller.CreateUser)
 
     /**
      * Message Queue
@@ -26,6 +26,6 @@ module.exports = function (app) {
      */
     // mq.consume('exchange', 'qname', 'keymsg', (msg)=>{
     //     console.log(JSON.parse(msg.content));
-        
+
     // });
 }

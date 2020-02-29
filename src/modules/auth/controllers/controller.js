@@ -133,24 +133,24 @@ exports.UserDupicate = function (req, res, next) {
     })
 }
 
-exports.CreateUser = function (req, res){
-    var newAuth = new Auth(req.body);
-    newAuth.createby = req.user;
-    newAuth.save(function (err, data) {
-        if (err) {
-            return res.status(400).send({
-                status: 400,
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.jsonp({
-                status: 200,
-                data: data
-            });
-            /**
-             * Message Queue
-             */
-            // mq.publish('exchange', 'keymsg', JSON.stringify(newOrder));
-        };
-    });
-}
+// exports.CreateUser = function (req, res){
+//     var newAuth = new Auth(req.body);
+//     newAuth.createby = req.user;
+//     newAuth.save(function (err, data) {
+//         if (err) {
+//             return res.status(400).send({
+//                 status: 400,
+//                 message: errorHandler.getErrorMessage(err)
+//             });
+//         } else {
+//             res.jsonp({
+//                 status: 200,
+//                 data: data
+//             });
+//             /**
+//              * Message Queue
+//              */
+//             // mq.publish('exchange', 'keymsg', JSON.stringify(newOrder));
+//         };
+//     });
+// }
