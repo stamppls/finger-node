@@ -16,32 +16,38 @@ describe('Auth CRUD routes tests', function () {
 
     before(function (done) {
         mockup = {
-            username: 'admin02',
-            password: 'admin02'
-        };
-        var auth = new Auth({
             username: 'admin01',
             password: 'admin01'
+        };
+        credentials = {
+            username: 'username',
+            password: 'password',
+            firstname: 'first name',
+            lastname: 'last name',
+            email: 'test@email.com',
+            roles: ['user']
+        };
+        token = jwt.sign(_.omit(credentials, 'password'), config.jwt.secret, {
+            expiresIn: 2 * 60 * 60 * 1000
         });
-        auth.save();
         done();
     });
 
-    xit('should be Auth get use token', (done) => {
+    it('should be Auth get use token', (done)=>{
         request(app)
-            .get('/api/auths')
-            .set('Authorization', 'Bearer ' + token)
-            .expect(200)
-            .end((err, res) => {
-                if (err) {
-                    return done(err);
-                }
-                var resp = res.body;
-                done();
-            });
+        .get('/api/auths')
+        .set('Authorization', 'Bearer ' + token)
+        .expect(200)
+        .end((err, res)=>{
+            if (err) {
+                return done(err);
+            }
+            var resp = res.body;
+            done();
+        });
     });
 
-    xit('should be Auth get by id', function (done) {
+    it('should be Auth get by id', function (done) {
 
         request(app)
             .post('/api/auths')
@@ -63,15 +69,14 @@ describe('Auth CRUD routes tests', function () {
                         }
                         var resp = res.body;
                         assert.equal(resp.status, 200);
-                        assert.equal(resp.data.username, mockup.username);
-                        assert.equal(resp.data.password, mockup.password);
+                        assert.equal(resp.data.name, mockup.name);
                         done();
                     });
             });
 
     });
 
-    xit('should be Auth post use token', (done) => {
+    it('should be Auth post use token', (done)=>{
         request(app)
             .post('/api/auths')
             .set('Authorization', 'Bearer ' + token)
@@ -82,13 +87,12 @@ describe('Auth CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
-                assert.equal(resp.data.username, mockup.username);
-                assert.equal(resp.data.password, mockup.password);
+                assert.equal(resp.data.name, mockup.name);
                 done();
             });
     });
 
-    xit('should be auth put use token', function (done) {
+    it('should be auth put use token', function (done) {
 
         request(app)
             .post('/api/auths')
@@ -102,7 +106,7 @@ describe('Auth CRUD routes tests', function () {
                 var resp = res.body;
                 var update = {
                     username: 'admin02',
-                    password: 'admin02finger'
+                    password: 'admin02'
                 }
                 request(app)
                     .put('/api/auths/' + resp.data._id)
@@ -122,7 +126,7 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    xit('should be auth delete use token', function (done) {
+    it('should be auth delete use token', function (done) {
 
         request(app)
             .post('/api/auths')
@@ -143,18 +147,18 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    xit('should be auth get not use token', (done) => {
+    it('should be auth get not use token', (done)=>{
         request(app)
-            .get('/api/auths')
-            .expect(403)
-            .expect({
-                status: 403,
-                message: 'User is not authorized'
-            })
-            .end(done);
+        .get('/api/auths')
+        .expect(403)
+        .expect({
+            status: 403,
+            message: 'User is not authorized'
+        })
+        .end(done);
     });
 
-    xit('should be auth post not use token', function (done) {
+    it('should be auth post not use token', function (done) {
 
         request(app)
             .post('/api/auths')
@@ -168,7 +172,7 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    xit('should be auth put not use token', function (done) {
+    it('should be auth put not use token', function (done) {
 
         request(app)
             .post('/api/auths')
@@ -196,7 +200,7 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    xit('should be auth delete not use token', function (done) {
+    it('should be auth delete not use token', function (done) {
 
         request(app)
             .post('/api/auths')
@@ -220,7 +224,7 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    it('should be signup post use token', (done) => {
+    it('should be Auth signup use token', (done)=>{
         request(app)
             .post('/api/auth/signup')
             .send(mockup)
@@ -233,28 +237,6 @@ describe('Auth CRUD routes tests', function () {
                 assert.equal(resp.status, 200);
                 assert.equal(resp.data.username, mockup.username);
                 assert.equal(resp.data.password, mockup.password);
-                done();
-            });
-    });
-
-    xit('should be signin post use token', (done) => {
-        var mockuplogin = {
-            username: 'admin01',
-            password: 'admin01'
-        }
-        request(app)
-            .post('/api/auth/signin')
-            .send(mockuplogin)
-            .expect(200)
-            .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                }
-                var resp = res.body;
-                assert.equal(resp.status, 200);
-                assert.equal(resp.data.username, mockupregis.username);
-                assert.equal(resp.data.password, mockupregis.password);
-                assert.notEqual(resp.token, null);
                 done();
             });
     });

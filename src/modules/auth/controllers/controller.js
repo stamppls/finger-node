@@ -4,9 +4,7 @@ var mongoose = require('mongoose'),
     mq = require('../../core/controllers/rabbitmq'),
     Auth = mongoose.model('Auth'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
-    jwt = require("jsonwebtoken"),
-    _ = require('lodash'),
-    config = require("../../../config/config");
+    _ = require('lodash');
 
 exports.getList = function (req, res) {
     var pageNo = parseInt(req.query.pageNo);
@@ -119,24 +117,25 @@ exports.delete = function (req, res) {
     });
 };
 
-exports.signup = function (req, res, next) {
-    Auth.findOne({ username: req.body.username }, function (err, user) {
+exports.UserDupicate = function (req, res, next) {
+    Auth.findOne({ username: req.body.username }, function (err, data) {
         if (err) {
             return res.status(400).send({
                 status: 400,
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            if (!user) {
+            if (!data) {
                 req.user = req.body;
                 next();
             }
         }
     })
-};
+}
 
-exports.createUser = function (req, res) {
+exports.CreateUser = function (req, res){
     var newAuth = new Auth(req.body);
+    newAuth.createby = req.user;
     newAuth.save(function (err, data) {
         if (err) {
             return res.status(400).send({
@@ -155,38 +154,3 @@ exports.createUser = function (req, res) {
         };
     });
 }
-// exports.signin = function (req, res, next) {
-    // console.log(req.body);
-    // Auth.findOne({username: req.body.username}, function(err, data){
-    //     console.log(data)
-    // })
-    // Auth.findOne({ username: req.body.username, password: req.body.password}, function (err, data) {
-    //     console.log(data);
-    //     if (err) {
-    //         return res.status(400).send({
-    //             status: 400,
-    //             message: errorHandler.getErrorMessage(err)
-    //         });
-    //     } else {
-    //         if (data) {
-    //             req.user = data;
-    //             next();
-    //         }
-    //     }
-    // })
-// };
-
-// exports.token = function (req, res) {
-    // var user = req.user;
-    // user.password = undefined;
-    // user.loginToken = "";
-    // user.loginToken = jwt.sign(_.omit(user, "password"), config.jwt.secret, {
-    //     expiresIn: 2 * 60 * 60 * 1000
-    // });
-    // user.loginExpires = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
-    // // return res.jsonp(user);
-    // res.jsonp({
-    //     status: 200,
-    //     token: user.loginToken
-    // });
-// };

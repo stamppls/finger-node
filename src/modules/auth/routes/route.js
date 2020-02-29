@@ -5,7 +5,7 @@ var controller = require('../controllers/controller'),
 module.exports = function (app) {
     var url = '/api/auths';
     var urlWithParam = '/api/auths/:authId';
-    app.route(url)//.all(policy.isAllowed)
+    app.route(url).all(policy.isAllowed)
         .get(controller.getList)
         .post(controller.create);
 
@@ -16,8 +16,8 @@ module.exports = function (app) {
 
     app.param('authId', controller.getByID);
 
-    app.route('/api/auth/signup').post(controller.signup, controller.createUser);
-    // app.route("/api/auth/signin").post(controller.signin, controller.token);
+    app.route('/api/auth/signup').post(controller.UserDupicate, controller.CreateUser)
+
     /**
      * Message Queue
      * exchange : ชื่อเครือข่ายไปรษณีย์  เช่น casan
@@ -26,6 +26,6 @@ module.exports = function (app) {
      */
     // mq.consume('exchange', 'qname', 'keymsg', (msg)=>{
     //     console.log(JSON.parse(msg.content));
-
+        
     // });
 }

@@ -7,15 +7,11 @@ var Schema = mongoose.Schema;
 var AuthSchema = new Schema({
     username: {
         type: String,
+        required: 'Please fill a Auth username',
     },
     password: {
         type: String,
-    },
-    loginToken: {
-        type: String
-    },
-    loginExpires: {
-        type: Date
+        required: 'Please fill a Auth password',
     },
     created: {
         type: Date,
