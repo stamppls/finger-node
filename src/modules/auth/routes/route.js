@@ -16,8 +16,8 @@ module.exports = function (app) {
 
     app.param('authId', controller.getByID);
 
-    app.route("/api/auth/signup").post(controller.signup);
-    app.route("/api/auth/signin").post(controller.signin, controller.token);
+    // app.route("/api/auth/signup").post(controller.signup);
+    // app.route("/api/auth/signin").post(controller.signin, controller.token);
     /**
      * Message Queue
      * exchange : ชื่อเครือข่ายไปรษณีย์  เช่น casan
