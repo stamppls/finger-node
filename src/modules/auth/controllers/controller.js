@@ -119,35 +119,42 @@ exports.delete = function (req, res) {
     });
 };
 
-// exports.signup = function (req, res) {
-//     Auth.findOne({ username: req.body.username }, function (err, user) {
-//         if (err || user) {
-//             return res.status(400).send({
-//                 status: 400,
-//                 message: errorHandler.getErrorMessage(err)
-//             });
-//         } else {
-//             if (!user) {
-//                 var user = new Auth(req.body);
-//                 user.save(function (err, resUser) {
-//                     if (err) {
-//                         return res.status(400).send({
-//                             status: 400,
-//                             message: errorHandler.getErrorMessage(err)
-//                         });
-//                     } else {
-//                         resUser
-//                         res.jsonp({
-//                             status: 200,
-//                             data: resUser
-//                         });
-//                     }
-//                 });
-//             }
-//         }
-//     })
-// };
+exports.signup = function (req, res, next) {
+    Auth.findOne({ username: req.body.username }, function (err, user) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            if (!user) {
+                req.user = req.body;
+                next();
+            }
+        }
+    })
+};
 
+exports.createUser = function (req, res) {
+    var newAuth = new Auth(req.body);
+    newAuth.save(function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp({
+                status: 200,
+                data: data
+            });
+            /**
+             * Message Queue
+             */
+            // mq.publish('exchange', 'keymsg', JSON.stringify(newOrder));
+        };
+    });
+}
 // exports.signin = function (req, res, next) {
     // console.log(req.body);
     // Auth.findOne({username: req.body.username}, function(err, data){

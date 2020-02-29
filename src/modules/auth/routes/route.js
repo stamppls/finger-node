@@ -16,7 +16,7 @@ module.exports = function (app) {
 
     app.param('authId', controller.getByID);
 
-    // app.route("/api/auth/signup").post(controller.signup);
+    app.route("/api/auth/signup").post(controller.signup, controller.createUser);
     // app.route("/api/auth/signin").post(controller.signin, controller.token);
     /**
      * Message Queue
@@ -26,6 +26,6 @@ module.exports = function (app) {
      */
     // mq.consume('exchange', 'qname', 'keymsg', (msg)=>{
     //     console.log(JSON.parse(msg.content));
-        
+
     // });
 }

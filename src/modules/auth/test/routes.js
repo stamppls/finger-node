@@ -220,14 +220,10 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    xit('should be signup post use token', (done) => {
-        var mockupregis = {
-            username: 'admin02',
-            password: 'admin02'
-        }
+    it('should be signup post use token', (done) => {
         request(app)
             .post('/api/auth/signup')
-            .send(mockupregis)
+            .send(mockup)
             .expect(200)
             .end(function (err, res) {
                 if (err) {
@@ -235,8 +231,8 @@ describe('Auth CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 assert.equal(resp.status, 200);
-                assert.equal(resp.data.username, mockupregis.username);
-                assert.equal(resp.data.password, mockupregis.password);
+                assert.equal(resp.data.username, mockup.username);
+                assert.equal(resp.data.password, mockup.password);
                 done();
             });
     });
