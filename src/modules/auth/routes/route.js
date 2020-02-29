@@ -7,7 +7,7 @@ module.exports = function (app) {
     var urlWithParam = '/api/auths/:authId';
     app.route(url).all(policy.isAllowed)
         .get(controller.getList)
-        .post(controller.create);
+        .post(controller.UserDupicate,controller.create);
 
     app.route(urlWithParam).all(policy.isAllowed)
         .get(controller.read)

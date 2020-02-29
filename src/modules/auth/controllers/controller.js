@@ -125,8 +125,13 @@ exports.UserDupicate = function (req, res, next) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            if (!data) {
-                req.user = req.body;
+            if (data) {
+                return res.status(400).send({
+                    status: 400,
+                    message: "Username is Dupicated!!"
+                })
+            } else {
+                req.user = data;
                 next();
             }
         }

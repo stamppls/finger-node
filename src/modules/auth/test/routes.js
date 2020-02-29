@@ -225,23 +225,6 @@ describe('Auth CRUD routes tests', function () {
 
     });
 
-    xit('should be Auth signup use token', (done)=>{
-        request(app)
-            .post('/api/auth/signup')
-            .send(mockup)
-            .expect(200)
-            .end(function (err, res) {
-                if (err) {
-                    return done(err);
-                }
-                var resp = res.body;
-                assert.equal(resp.status, 200);
-                assert.equal(resp.data.username, mockup.username);
-                assert.equal(resp.data.password, mockup.password);
-                done();
-            });
-    });
-
     afterEach(function (done) {
         Auth.deleteMany().exec(done);
     });
