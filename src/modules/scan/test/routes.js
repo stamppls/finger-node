@@ -38,7 +38,8 @@ describe('Scan CRUD routes tests', function () {
             DayOfWeek: "เสาร์",
             timestart: "13.00",
             timeend: "24.00",
-            subject: "คณิตศาสตร์",
+            subjectname: "คณิตศาสตร์",
+            subjectid: "111-11-1",
             group_name: "CSS45941N"
         })
         classroom.save();

@@ -29,9 +29,13 @@ var ClassroomSchema = new Schema({
         type: String,
         required: "Please timeend" 
     },
-    subject:{
+    subjectname:{
         type: String,
-        required: "Please subject" 
+        required: "Please subjectname" 
+    },
+    subjectid:{
+        type: String,
+        required: "Please subjectid" 
     },
     group_name:{
         type: String,

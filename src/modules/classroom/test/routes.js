@@ -22,7 +22,8 @@ describe('Classroom CRUD routes tests', function () {
             DayOfWeek: "จันทร์",
             timestart: "8.30",
             timeend: "12.00",
-            subject: "คณิตศาสตร์",
+            subjectname: "คณิตศาสตร์",
+            subjectid: "111-11-1",
             group_name: "CSS45941N"
         };
         credentials = {
@@ -81,7 +82,8 @@ describe('Classroom CRUD routes tests', function () {
                         assert.equal(resp.data.DayOfWeek, mockup.DayOfWeek);
                         assert.equal(resp.data.timestart, mockup.timestart);
                         assert.equal(resp.data.timeend, mockup.timeend);
-                        assert.equal(resp.data.subject, mockup.subject);
+                        assert.equal(resp.data.subjectname, mockup.subjectname);
+                        assert.equal(resp.data.subjectid, mockup.subjectid);
                         assert.equal(resp.data.group_name, mockup.group_name);
                         done();
                     });
@@ -106,7 +108,8 @@ describe('Classroom CRUD routes tests', function () {
                 assert.equal(resp.data.DayOfWeek, mockup.DayOfWeek);
                 assert.equal(resp.data.timestart, mockup.timestart);
                 assert.equal(resp.data.timeend, mockup.timeend);
-                assert.equal(resp.data.subject, mockup.subject);
+                assert.equal(resp.data.subjectname, mockup.subjectname);
+                assert.equal(resp.data.subjectid, mockup.subjectid);
                 assert.equal(resp.data.group_name, mockup.group_name);
                 done();
             });
@@ -131,7 +134,8 @@ describe('Classroom CRUD routes tests', function () {
                     DayOfWeek: "อังคาร",
                     timestart: "8.30",
                     timeend: "11.30",
-                    subject: "ไทย",
+                    subjectname: "ไทย",
+                    subjectid: "222-22-2",
                     group_name: "ITS45941N"
                 }
                 request(app)
@@ -150,7 +154,8 @@ describe('Classroom CRUD routes tests', function () {
                         assert.equal(resp.data.DayOfWeek, update.DayOfWeek);
                         assert.equal(resp.data.timestart, update.timestart);
                         assert.equal(resp.data.timeend, update.timeend);
-                        assert.equal(resp.data.subject, update.subject);
+                        assert.equal(resp.data.subjectname, update.subjectname);
+                        assert.equal(resp.data.subjectid, update.subjectid);
                         assert.equal(resp.data.group_name, update.group_name);
                         done();
                     });
