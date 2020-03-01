@@ -16,23 +16,23 @@ exports.getList = function (req, res) {
     }
     query.skip = size * (pageNo - 1);
     query.limit = size;
-        Student.find({}, {}, query, function (err, datas) {
-            if (err) {
-                return res.status(400).send({
-                    status: 400,
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                res.jsonp({
-                    status: 200,
-                    data: datas
-                });
-            };
-        });
+    Student.find({}, {}, query, function (err, datas) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp({
+                status: 200,
+                data: datas
+            });
+        };
+    });
 };
 
 exports.create = function (req, res) {
-    var newStudent = new Student (req.body);
+    var newStudent = new Student(req.body);
     newStudent.createby = req.user;
     newStudent.save(function (err, data) {
         if (err) {
@@ -116,3 +116,24 @@ exports.delete = function (req, res) {
         };
     });
 };
+
+exports.getGroupName = function (req, res, next, groupId) {
+    Student.find({ group_name: groupId }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            req.data = data;
+            next();
+        };
+    });
+}
+
+exports.studentByGroup = function (req, res) {
+    res.jsonp({
+        status: 200,
+        data: req.data ? req.data : []
+    });
+}

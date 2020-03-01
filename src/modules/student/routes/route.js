@@ -16,6 +16,11 @@ module.exports = function (app) {
 
     app.param('studentId', controller.getByID);
 
+
+
+    app.route('/api/student/:groupId').get(controller.studentByGroup)
+
+    app.param('groupId', controller.getGroupName);
     /**
      * Message Queue
      * exchange : ชื่อเครือข่ายไปรษณีย์  เช่น casan
@@ -24,6 +29,6 @@ module.exports = function (app) {
      */
     // mq.consume('exchange', 'qname', 'keymsg', (msg)=>{
     //     console.log(JSON.parse(msg.content));
-        
+
     // });
 }

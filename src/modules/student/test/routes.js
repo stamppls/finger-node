@@ -82,7 +82,6 @@ describe('Student CRUD routes tests', function () {
                         done();
                     });
             });
-
     });
 
     it('should be Student post use token', (done) => {
@@ -244,6 +243,39 @@ describe('Student CRUD routes tests', function () {
                     .end(done);
             });
 
+    });
+
+    it('should be Student get by Group', function (done) {
+
+        request(app)
+            .post('/api/students')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockup)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                request(app)
+                    .get('/api/student/' + resp.data.group_name)
+                    .set('Authorization', 'Bearer ' + token)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) {
+                            return done(err);
+                        }
+                        var resp = res.body;
+                        assert.equal(resp.status, 200);
+                        assert.equal(resp.data[0].finger_id1, mockup.finger_id1);
+                        assert.equal(resp.data[0].finger_id2, mockup.finger_id2);
+                        assert.equal(resp.data[0].group_name, mockup.group_name);
+                        assert.equal(resp.data[0].studentid, mockup.studentid);
+                        assert.equal(resp.data[0].firstname, mockup.firstname);
+                        assert.equal(resp.data[0].lastname, mockup.lastname);
+                        done();
+                    });
+            });
     });
 
     afterEach(function (done) {
