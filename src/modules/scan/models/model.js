@@ -17,6 +17,10 @@ var ScanSchema = new Schema({
         type: String,
         required: 'Please fill a Scan time',
     },
+    subjectname:{
+        type: String,
+        required: 'Please fill a Scan subjectname',
+    },
     created: {
         type: Date,
         default: Date.now
