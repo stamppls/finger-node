@@ -37,6 +37,10 @@ var ClassroomSchema = new Schema({
         type: String,
         required: "Please subjectid" 
     },
+    teachername:{
+        type: String,
+        required: "Please teachername" 
+    },
     group_name:{
         type: String,
         required: "Please group_name" 

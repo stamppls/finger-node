@@ -24,6 +24,7 @@ describe('Classroom CRUD routes tests', function () {
             timeend: "12.00",
             subjectname: "คณิตศาสตร์",
             subjectid: "111-11-1",
+            teachername: "อาจารย์ ภูรี ลิ้มสกุล",
             group_name: "CSS45941N"
         };
         credentials = {
@@ -84,6 +85,7 @@ describe('Classroom CRUD routes tests', function () {
                         assert.equal(resp.data.timeend, mockup.timeend);
                         assert.equal(resp.data.subjectname, mockup.subjectname);
                         assert.equal(resp.data.subjectid, mockup.subjectid);
+                        assert.equal(resp.data.teachername, mockup.teachername);
                         assert.equal(resp.data.group_name, mockup.group_name);
                         done();
                     });
@@ -110,6 +112,7 @@ describe('Classroom CRUD routes tests', function () {
                 assert.equal(resp.data.timeend, mockup.timeend);
                 assert.equal(resp.data.subjectname, mockup.subjectname);
                 assert.equal(resp.data.subjectid, mockup.subjectid);
+                assert.equal(resp.data.teachername, mockup.teachername);
                 assert.equal(resp.data.group_name, mockup.group_name);
                 done();
             });
@@ -136,6 +139,7 @@ describe('Classroom CRUD routes tests', function () {
                     timeend: "11.30",
                     subjectname: "ไทย",
                     subjectid: "222-22-2",
+                    teachername: "อาจารย์ ณัฐณิชา สาริยัง",
                     group_name: "ITS45941N"
                 }
                 request(app)
@@ -156,6 +160,7 @@ describe('Classroom CRUD routes tests', function () {
                         assert.equal(resp.data.timeend, update.timeend);
                         assert.equal(resp.data.subjectname, update.subjectname);
                         assert.equal(resp.data.subjectid, update.subjectid);
+                        assert.equal(resp.data.teachername, update.teachername);
                         assert.equal(resp.data.group_name, update.group_name);
                         done();
                     });

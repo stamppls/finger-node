@@ -40,6 +40,7 @@ describe('Scan CRUD routes tests', function () {
             timeend: "24.00",
             subjectname: "คณิตศาสตร์",
             subjectid: "111-11-1",
+            teachername: "อาจารย์ ภูรี ลิ้มสกุล",
             group_name: "CSS45941N"
         })
         classroom.save();
