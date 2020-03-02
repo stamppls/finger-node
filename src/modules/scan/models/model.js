@@ -17,9 +17,9 @@ var ScanSchema = new Schema({
         type: String,
         required: 'Please fill a Scan time',
     },
-    subjectname:{
+    subjectid:{
         type: String,
-        required: 'Please fill a Scan subjectname',
+        required: 'Please fill a Scan subjectid',
     },
     created: {
         type: Date,

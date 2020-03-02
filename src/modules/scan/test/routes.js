@@ -35,7 +35,7 @@ describe('Scan CRUD routes tests', function () {
             roomid: "23901",
             year: "2564",
             term: "2",
-            DayOfWeek: "อาทิตย์",
+            DayOfWeek: "จันทร์",
             timestart: "13:00",
             timeend: "24:00",
             subjectname: "คณิตศาสตร์",
@@ -98,7 +98,7 @@ describe('Scan CRUD routes tests', function () {
                         assert.equal(resp.data.finger_id, mockup.finger_id);
                         assert.notEqual(resp.data.time, null);
                         assert.notEqual(resp.data.date, null);
-                        assert.notEqual(resp.data.subjectname, null);
+                        assert.notEqual(resp.data.subjectid, null);
                         done();
                     });
             });
@@ -116,10 +116,11 @@ describe('Scan CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
+                console.log(resp)
                 assert.equal(resp.data.finger_id, mockup.finger_id);
                 assert.notEqual(resp.data.time, null);
                 assert.notEqual(resp.data.date, null);
-                assert.notEqual(resp.data.subjectname, null);
+                assert.notEqual(resp.data.subjectid, null);
                 done();
             });
     });

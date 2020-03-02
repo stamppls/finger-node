@@ -142,18 +142,6 @@ exports.getExistStudent = function (req, res, next) {
 }
 
 exports.getClassByTime = function (req, res, next) {
-    // var hour = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getHours());
-    // var min = (new Date(new Date().getTime() - (24 * 60 * 60 * 1000)).getMinutes());
-
-    // var date = new Date();
-    // var DayOfWeek = date.getDay();
-
-    // var day = date.getDate(); //days from month 1-31
-    // var month = date.getUTCMonth() + 1; //months from 1-12
-    // var year = date.getUTCFullYear(); //year
-    // var dateNow = day + "/" + month + "/" + year;
-    // var timeNow = parseFloat(hour.toString() + "." + min.toString());
-    // console.log(timeNow);
     var asiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
     var bkkHourNow = new Date(new Date(asiaTime).getTime()).getHours();
     var bkkMinNow = new Date(new Date(asiaTime).getTime()).getMinutes();
@@ -175,11 +163,11 @@ exports.getClassByTime = function (req, res, next) {
         DayOfWeek = "พุธ"
     } else if (DayOfWeek == 4) {
         DayOfWeek = "พฤหัสบดี"
-    } else if(DayOfWeek == 5){
+    } else if (DayOfWeek == 5) {
         DayOfWeek = "ศุกร์"
-    }else if(DayOfWeek == 6){
+    } else if (DayOfWeek == 6) {
         DayOfWeek = "เสาร์"
-    }else{
+    } else {
         DayOfWeek = "อาทิตย์"
     }
 
@@ -198,7 +186,7 @@ exports.getClassByTime = function (req, res, next) {
                         finger_id: req.body.finger_id,
                         time: bkkTimeNow,
                         date: datebkkNow,
-                        subjectname: data.subjectname,
+                        subjectid: data.subjectid,
                     }
                     req.body = ScanNew;
                     req.classroom = data;

@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
     model = require('../models/model'),
     mq = require('../../core/controllers/rabbitmq'),
     Student = mongoose.model('Student'),
+    Classroom = mongoose.model('Classroom'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 

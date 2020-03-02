@@ -6,15 +6,24 @@ var request = require('supertest'),
     jwt = require('jsonwebtoken'),
     mongoose = require('mongoose'),
     app = require('../../../config/express'),
-    Reportcheck = mongoose.model('Reportcheck');
+    Reportcheck = mongoose.model('Reportcheck'),
+    Student = mongoose.model('Student'),
+    Scan = mongoose.model('Scan'),
+    Classroom = mongoose.model('Classroom');
 
 var credentials,
     token,
-    mockup;
+    mockup,
+    mockupReport;
 
 describe('Reportcheck CRUD routes tests', function () {
 
     before(function (done) {
+        mockupReport = {
+            subjectid: '111-11-1',
+            group_name: 'CSS45941N'
+        }
+
         mockup = {
             roomid: "23901",
             year: "2564",
@@ -71,22 +80,21 @@ describe('Reportcheck CRUD routes tests', function () {
         done();
     });
 
-    it('should be Reportcheck get use token', (done)=>{
+    it('should be Reportcheck get use token', (done) => {
         request(app)
-        .get('/api/reportchecks')
-        .set('Authorization', 'Bearer ' + token)
-        .expect(200)
-        .end((err, res)=>{
-            if (err) {
-                return done(err);
-            }
-            var resp = res.body;
-            done();
-        });
+            .get('/api/reportchecks')
+            .set('Authorization', 'Bearer ' + token)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                done();
+            });
     });
 
     it('should be Reportcheck get by id', function (done) {
-
         request(app)
             .post('/api/reportchecks')
             .set('Authorization', 'Bearer ' + token)
@@ -114,7 +122,7 @@ describe('Reportcheck CRUD routes tests', function () {
 
     });
 
-    it('should be Reportcheck post use token', (done)=>{
+    it('should be Reportcheck post use token', (done) => {
         request(app)
             .post('/api/reportchecks')
             .set('Authorization', 'Bearer ' + token)
@@ -222,15 +230,15 @@ describe('Reportcheck CRUD routes tests', function () {
 
     });
 
-    it('should be reportcheck get not use token', (done)=>{
+    it('should be reportcheck get not use token', (done) => {
         request(app)
-        .get('/api/reportchecks')
-        .expect(403)
-        .expect({
-            status: 403,
-            message: 'User is not authorized'
-        })
-        .end(done);
+            .get('/api/reportchecks')
+            .expect(403)
+            .expect({
+                status: 403,
+                message: 'User is not authorized'
+            })
+            .end(done);
     });
 
     it('should be reportcheck post not use token', function (done) {
@@ -297,6 +305,58 @@ describe('Reportcheck CRUD routes tests', function () {
                     .end(done);
             });
 
+    });
+
+    it('should be Reportcheck get by id', function (done) {
+
+        var classroom = new Classroom(
+            {
+                roomid: "23901",
+                year: "2564",
+                term: "2",
+                DayOfWeek: "จันทร์",
+                timestart: "13:00",
+                timeend: "24:00",
+                subjectname: "คณิตศาสตร์",
+                subjectid: "111-11-1",
+                teachername: "อาจารย์ ภูรี ลิ้มสกุล",
+                group_name: "CSS45941N"
+            }
+        )
+        classroom.save();
+
+        var student = new Student({
+            finger_id1: "3",
+            finger_id2: "4",
+            group_name: "CSS45941N",
+            studentid: "459415241015",
+            firstname: "นาย ภูรี",
+            lastname: "ลิ้มสกุล"
+        })
+        student.save();
+
+        var scan = new Scan({
+            finger_id: "3",
+            time: "13:00",
+            date: "2/3/2020",
+            subjectid: "111-11-1",
+        })
+        scan.save();
+
+        request(app)
+            .post('/api/report/group')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockupReport)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                assert.equal(resp.status, 200);
+                // assert.equal(resp.data.name, mockup.name);
+                done();
+            });
     });
 
     afterEach(function (done) {

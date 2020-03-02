@@ -16,6 +16,9 @@ module.exports = function (app) {
 
     app.param('reportcheckId', controller.getByID);
 
+    app.route('/api/report/group')//.all(policy.isAllowed)
+        .post(controller.getSubFromClass, controller.getGroupFromStudent, controller.getScan, controller.reportGroup);
+
     /**
      * Message Queue
      * exchange : ชื่อเครือข่ายไปรษณีย์  เช่น casan
@@ -24,6 +27,6 @@ module.exports = function (app) {
      */
     // mq.consume('exchange', 'qname', 'keymsg', (msg)=>{
     //     console.log(JSON.parse(msg.content));
-        
+
     // });
 }
