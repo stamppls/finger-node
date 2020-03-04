@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <style>
+            {#asset report-styles.css @encoding=utf8}
+        </style>
+    </head>
+<body>
+    <h2>มหาวิทยาลัยเทคโนโลยีราชมงคลสุวรรณภูมิ ศูนย์หันตรา</h2>
+    <div class="text-head">
+    <label class="p1">รหัสวิชา {{roomid}}</label>
+    <label class="p1">ชื่อวิชา {{subjectname}}</label>
+    <label class="p1">ภาคเรียนที่ {{term}}</label>
+    <label class="p1">ปีการศึกษาที่ {{year}}</label>
+    <br>
+    <br>
+    <span class="p1">อาจารย์ประจำวิชา {{teachername}}</span>
+    <span class="p1">ห้องเรียน {{roomid}}</span>
+    <span class="p2">กลุ่มเรียน {{group_name}}</span>
+    </div>
+    <div class="table">
+    <table style="width:100%">
+        <tr>
+            <th>ลำดับ</th>
+            <th>รหัสประจำตัว</th>
+            <th>ชื่อ-นามสกุล</th>
+            <th>สัปดาห์ที่ 1</th>
+            <th>สัปดาห์ที่ 2</th>
+            <th>สัปดาห์ที่ 3</th>
+            <th>สัปดาห์ที่ 4</th>
+            <th>สัปดาห์ที่ 5</th>
+        </tr>
+    {{#each students}}
+        <tr>
+            <td><p id="demo"></p></td>
+            <td>{{studentid}}</td>
+            <td>{{firstname}} {{lastname}}</td>
+            <td>{{week1}}</td>
+            <td>{{week2}}</td>
+            <td>{{week3}}</td>
+            <td>{{week4}}</td>
+            <td>{{week5}}</td>
+        </tr>
+    </table>
+    {{/each}}
+    </div>
+
+<script>
+var text = "";
+var i;
+var x = students;
+for (i = 0; i < 5; i++) {
+  text += "The number is " + i + "<br>";
+}
+document.getElementById("demo").innerHTML = text;
+</script>
+
+</body>
+</html>

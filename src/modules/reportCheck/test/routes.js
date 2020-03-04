@@ -321,8 +321,7 @@ describe('Reportcheck CRUD routes tests', function () {
                 subjectid: "111-11-1",
                 teachername: "อาจารย์ ภูรี ลิ้มสกุล",
                 group_name: "CSS45941N"
-            }
-        )
+            })
         classroom.save();
 
         var student = new Student({
@@ -337,9 +336,10 @@ describe('Reportcheck CRUD routes tests', function () {
 
         var scan = new Scan({
             finger_id: "3",
-            time: "13:00",
+            time: "12:50",
             date: "2/3/2020",
             subjectid: "111-11-1",
+            group_name: "CSS45941N"
         })
         scan.save();
 
@@ -354,7 +354,7 @@ describe('Reportcheck CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 assert.equal(resp.status, 200);
-                // assert.equal(resp.data.name, mockup.name);
+                assert.notEqual(resp.data.birthtime, null);
                 done();
             });
     });

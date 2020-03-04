@@ -1,0 +1,15 @@
+{
+    "shortid": "erkLzi",
+    "name": "Orders",
+    "folder": {
+        "shortid": "Zo_Ss0p"
+    },
+    "creationDate": {
+        "$$date": 1583159182222
+    },
+    "modificationDate": {
+        "$$date": 1583159182222
+    },
+    "_id": "1NuO7Gl5914hjKPH",
+    "$entitySet": "folders"
+}

@@ -21,6 +21,10 @@ var ScanSchema = new Schema({
         type: String,
         required: 'Please fill a Scan subjectid',
     },
+    group_name:{
+        type: String,
+        required: 'Please fill a Scan group_name',
+    },
     created: {
         type: Date,
         default: Date.now

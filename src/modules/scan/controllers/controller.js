@@ -187,6 +187,7 @@ exports.getClassByTime = function (req, res, next) {
                         time: bkkTimeNow,
                         date: datebkkNow,
                         subjectid: data.subjectid,
+                        group_name: data.group_name
                     }
                     req.body = ScanNew;
                     req.classroom = data;

@@ -1,0 +1,30 @@
+{
+    "roomid": "23901",
+    "year": "2563",
+    "term": "2",
+    "subjectid": "111-11-1",
+    "subjectname": "Introduction to Data Warehousing and Data Mining",
+    "teachername": "อาจารย์ ไก่ กุ๊กกุ๊ก",
+    "group_name": "CSS45941N",
+    "students": [{
+            "studentid": "459415241015",
+            "firstname": "นาย ภูรี",
+            "lastname": "ลิ้มสกุล",
+            "week1": "8:21",
+            "week2": "7:59",
+            "week3": "7:45",
+            "week4": "7:54",
+            "week5": "8:11"
+        },
+        {
+            "studentid": "459415241015",
+            "firstname": "นางสาว ณัฐณิชา",
+            "lastname": "สาริยัง",
+            "week1": "7:30",
+            "week2": "7:40",
+            "week3": "7:32",
+            "week4": "8:29",
+            "week5": "8:01"
+        }
+    ]
+}

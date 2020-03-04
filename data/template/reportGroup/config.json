@@ -1,0 +1,21 @@
+{
+    "folder": {
+        "shortid": "bBn_Dki"
+    },
+    "shortid": "Ske9DloqVI",
+    "name": "reportGroup",
+    "recipe": "chrome-pdf",
+    "engine": "handlebars",
+    "chrome": {
+        "printBackground": true
+    },
+    "data": {
+        "shortid": "SJelQQs54I"
+    },
+    "creationDate": "2020-03-02T15:41:39.735Z",
+    "modificationDate": {
+        "$$date": 1583223636352
+    },
+    "_id": "tIfZuKy2adXoVxLH",
+    "$entitySet": "templates"
+}
