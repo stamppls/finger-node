@@ -253,8 +253,7 @@ exports.ModifyDataReport = function (req, res, next) {
         group_name: classroom.group_name,
         student: []
     }
-
-    var studentCheck = [];
+    
     var i = 0;
     student.forEach(students => {
         students = {
@@ -299,7 +298,7 @@ exports.ModifyDataReport = function (req, res, next) {
         })
         report.student.push(students)
     })
-    
+
     //create Workbook,Worksheet
     var wb = new xl.Workbook();
     var ws = wb.addWorksheet('Sheet 1');
@@ -489,19 +488,24 @@ exports.ModifyDataReport = function (req, res, next) {
         number++;
     })
 
-    var FileName = report.group_name
-    wb.write(FileName + '.xlsx', function (err, stats) {
-        if (err) {
-            return res.status(400).send({
-                status: 400,
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.jsonp({
-                status: 200,
-                data: stats,
-            });
-        }
-    });
+    var FileName = report.group_name;
+
+    wb.writeToBuffer('ExcelFile.xlsx', res).then(function(buffer) {
+        console.log(buffer);
+      });
+    // wb.write(FileName + '.xlsx', function (err, stats) {
+    //     if (err) {
+    //         return res.status(400).send({
+    //             status: 400,
+    //             message: errorHandler.getErrorMessage(err)
+    //         });
+    //     } else {
+    //         res.attachment(FileNam + '.xlsx');
+    //         // res.jsonp({
+    //         //     status: 200,
+    //         //     data: stats,
+    //         // });
+    //     }
+    // });
 }
 
