@@ -352,6 +352,7 @@ describe('Reportcheck CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
+                console.log(resp)
                 assert.equal(resp.status, 200);
                 // assert.notEqual(resp.data.birthtime, null);
                 done();
