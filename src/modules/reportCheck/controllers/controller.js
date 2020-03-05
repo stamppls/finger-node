@@ -253,7 +253,7 @@ exports.ModifyDataReport = function (req, res, next) {
         group_name: classroom.group_name,
         student: []
     }
-    
+
     var i = 0;
     student.forEach(students => {
         students = {
@@ -468,7 +468,7 @@ exports.ModifyDataReport = function (req, res, next) {
     ws.cell(5, 12).string('สัปดาห์ที่ 4').style(StyleStudents);
     ws.cell(5, 13).string('สัปดาห์ที่ 5').style(StyleStudents);
     ws.cell(5, 14).string('สัปดาห์ที่ 6').style(StyleStudents);
-    ws.cell(5, 15).string('สัปดาห์ที่ 7').style(StyleStudents);
+    ws.cell(5, 15).string('สัปดาห์ที่ 7').style(StyleStudents); 
 
     var i = 6;
     var number = 1;
@@ -490,9 +490,12 @@ exports.ModifyDataReport = function (req, res, next) {
 
     var FileName = report.group_name;
 
-    wb.writeToBuffer('ExcelFile.xlsx', res).then(function(buffer) {
-        console.log(buffer);
-      });
+    wb.writeToBuffer('ExcelFile.xlsx', res).then(function (buffer) {
+        res.jsonp({
+            status: 200,
+            data: buffer,
+        });
+    });
     // wb.write(FileName + '.xlsx', function (err, stats) {
     //     if (err) {
     //         return res.status(400).send({
