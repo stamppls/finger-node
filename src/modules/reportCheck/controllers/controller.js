@@ -489,12 +489,13 @@ exports.ModifyDataReport = function (req, res) {
     })
 
     var FileName = report.group_name;
-    wb.writeToBuffer('ExcelFile.xlsx').then((buffer) => {
-        res.jsonp({
-            status: 200,
-            data: buffer,
-        });
-    })
+//     wb.writeToBuffer('ExcelFile.xlsx').then((buffer) => {
+//         res.jsonp({
+//             status: 200,
+//             data: buffer,
+//         });
+//     })
+    wb.write(FileName + '.xlsx', res);
 
 
     // wb.write(FileName + '.xlsx', function (err, stats) {
