@@ -420,22 +420,6 @@ exports.ModifyDataReport = function (req, res) {
     })
 
     var FileName = report.group_name;
-    wb.write(FileName + '.xlsx' , res);
-
-
-    // wb.write(FileName + '.xlsx', function (err, stats) {
-    //     if (err) {
-    //         return res.status(400).send({
-    //             status: 400,
-    //             message: errorHandler.getErrorMessage(err)
-    //         });
-    //     } else {
-    //         res.attachment(FileNam + '.xlsx');
-    //         // res.jsonp({
-    //         //     status: 200,
-    //         //     data: stats,
-    //         // });
-    //     }
-    // });
+    wb.write(FileName + '.xlsx' , res)
 }
 

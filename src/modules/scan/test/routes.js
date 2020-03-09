@@ -21,30 +21,6 @@ describe('Scan CRUD routes tests', function () {
             finger_id: "3",
         };
 
-        var student = new Student({
-            finger_id1: "3",
-            finger_id2: "4",
-            group_name: "CSS45941N",
-            studentid: "459415241015",
-            firstname: "นาย ภูรี",
-            lastname: "ลิ้มสกุล"
-        })
-        student.save();
-
-        var classroom = new Classroom({
-            roomid: "23901",
-            year: "2564",
-            term: "2",
-            DayOfWeek: "พุธ",
-            timestart: "13:00",
-            timeend: "23:00",
-            subjectname: "คณิตศาสตร์",
-            subjectid: "111-11-1",
-            teachername: "อาจารย์ ภูรี ลิ้มสกุล",
-            group_name: "CSS45941N"
-        })
-        classroom.save();
-
         credentials = {
             username: 'username',
             password: 'password',

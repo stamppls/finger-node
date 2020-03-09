@@ -168,7 +168,7 @@ describe('Student CRUD routes tests', function () {
 
     });
 
-    it('should be student get not use token', (done) => {
+    xit('should be student get not use token', (done) => {
         request(app)
             .get('/api/students')
             .expect(403)
@@ -179,7 +179,7 @@ describe('Student CRUD routes tests', function () {
             .end(done);
     });
 
-    it('should be student post not use token', function (done) {
+    xit('should be student post not use token', function (done) {
 
         request(app)
             .post('/api/students')
@@ -193,7 +193,7 @@ describe('Student CRUD routes tests', function () {
 
     });
 
-    it('should be student put not use token', function (done) {
+    xit('should be student put not use token', function (done) {
 
         request(app)
             .post('/api/students')
@@ -221,7 +221,7 @@ describe('Student CRUD routes tests', function () {
 
     });
 
-    it('should be student delete not use token', function (done) {
+    xit('should be student delete not use token', function (done) {
 
         request(app)
             .post('/api/students')

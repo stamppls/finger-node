@@ -12,7 +12,7 @@ module.exports = function (app) {
             controller.getClassByTime,
             controller.create)
 
-    app.route(urlWithParam).all(policy.isAllowed)
+    app.route(urlWithParam)//.all(policy.isAllowed)
         .get(controller.read)
         .put(controller.update)
         .delete(controller.delete);

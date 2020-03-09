@@ -171,6 +171,7 @@ exports.getClassByTime = function (req, res, next) {
         DayOfWeek = "อาทิตย์"
     }
 
+
     Classroom.findOne({ group_name: req.student.group_name }, function (err, data) {
         if (err) {
             return res.status(400).send({
@@ -181,6 +182,9 @@ exports.getClassByTime = function (req, res, next) {
             if (data) {
                 var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
                 var timeend = parseFloat(data.timeend);
+                // console.log(bkkTimeNow+ ':' +timebeforstart)
+                // console.log(bkkTimeNow+ ':' +timeend)
+                // console.log(data.DayOfWeek+ ':' +DayOfWeek)
                 if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                     var ScanNew = {
                         finger_id: req.body.finger_id,
