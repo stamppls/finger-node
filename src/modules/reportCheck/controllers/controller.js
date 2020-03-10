@@ -434,19 +434,20 @@ exports.ModifyDataReport = function (req, res) {
     var number = 1;
     var w = 9;
     report.student.forEach(student => {
-        student.week.forEach(week => {
-            ws.cell(5, w).string(week.date).style(StyleStudents);
-        })
+        // console.log(student);
         ws.cell(i, 3).number(number).style(StyleStudents);
         ws.cell(i, 4, i, 5, true).string(student.studentid).style(StyleStudents);
         ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents);
-        ws.cell(i, 9).string(week.time).style(StyleStudents);
-        ws.cell(i, 10).string(week.time).style(StyleStudents);
-        ws.cell(i, 11).string(week.time).style(StyleStudents);
-        ws.cell(i, 12).string(week.time).style(StyleStudents);
-        ws.cell(i, 13).string(week.time).style(StyleStudents);
-        ws.cell(i, 14).string(week.time).style(StyleStudents);
-        ws.cell(i, 15).string(week.time).style(StyleStudents);
+        ws.cell(5, w).string(student.week1.date).style(StyleStudents);
+        ws.cell(5, w).string(student.week2.date).style(StyleStudents);
+
+        ws.cell(i, 9).string(student.week1.time).style(StyleStudents);
+        ws.cell(i, w).string(student.week2.time).style(StyleStudents);
+        ws.cell(i, w).string(student.week3.time).style(StyleStudents);
+        ws.cell(i, w).string(student.week4.time).style(StyleStudents);
+        ws.cell(i, w).string(student.week5.time).style(StyleStudents);
+        ws.cell(i, w).string(student.week6.time).style(StyleStudents);
+        ws.cell(i, w).string(student.week7.time).style(StyleStudents);
         i++;
         w++;
         number++;
