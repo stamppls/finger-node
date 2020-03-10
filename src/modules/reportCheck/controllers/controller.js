@@ -193,7 +193,13 @@ exports.ModifyDataReport = function (req, res) {
             studentid: students.studentid,
             firstname: students.firstname,
             lastname: students.lastname,
-            week: []
+            week1: '',
+            week2: '',
+            week3: '',
+            week4: '',
+            week5: '',
+            week6: '',
+            week7: ''
         }
 
         var dateBefore;
@@ -204,40 +210,47 @@ exports.ModifyDataReport = function (req, res) {
                 if (dateBefore !== scans.date) {
                     week++;
                     if (week == 1) {
-                        students.week.push({
+                        weeks = {
                             date: scans.date,
                             time: scans.time
-                        })
+                        }
+                        students.week1 = weeks;
                     } else if (week == 2) {
-                        students.week.push({
+                        weeks = {
                             date: scans.date,
                             time: scans.time
-                        })
+                        }
+                        students.week2 = weeks;
                     } else if (week == 3) {
-                        students.week.push({
+                        weeks = {
                             date: scans.date,
                             time: scans.time
-                        })
+                        }
+                        students.week3 = weeks;
                     } else if (week == 4) {
-                        students.week.push({
+                        weeks = {
                             date: scans.date,
                             time: scans.time
-                        })
+                        }
+                        students.week4 = weeks;
                     } else if (week == 5) {
-                        students.week.push({
+                        weeks = {
                             date: scans.date,
                             time: scans.time
-                        })
+                        }
+                        students.week5 = weeks;
                     } else if (week == 6) {
-                        students.week.push({
+                        weeks = {
                             date: scans.date,
                             time: scans.time
-                        })
+                        }
+                        students.week6 = weeks;
                     } else {
-                        students.week.push({
+                        weeks = {
                             date: scans.date,
                             time: scans.time
-                        })
+                        }
+                        students.week7 = weeks;
                     }
                 }
                 dateBefore = scans.date;
@@ -423,12 +436,17 @@ exports.ModifyDataReport = function (req, res) {
     report.student.forEach(student => {
         student.week.forEach(week => {
             ws.cell(5, w).string(week.date).style(StyleStudents);
-            ws.cell(i, w).string(week.time).style(StyleStudents)
         })
-
         ws.cell(i, 3).number(number).style(StyleStudents);
         ws.cell(i, 4, i, 5, true).string(student.studentid).style(StyleStudents);
-        ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents)
+        ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents);
+        ws.cell(i, 9).string(week.time).style(StyleStudents);
+        ws.cell(i, 10).string(week.time).style(StyleStudents);
+        ws.cell(i, 11).string(week.time).style(StyleStudents);
+        ws.cell(i, 12).string(week.time).style(StyleStudents);
+        ws.cell(i, 13).string(week.time).style(StyleStudents);
+        ws.cell(i, 14).string(week.time).style(StyleStudents);
+        ws.cell(i, 15).string(week.time).style(StyleStudents);
         i++;
         w++;
         number++;
