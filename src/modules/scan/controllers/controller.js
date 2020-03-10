@@ -184,9 +184,9 @@ exports.getClassByTime = function (req, res, next) {
                 data.forEach(subject => {
                     var timebeforstart = (parseFloat(subject.timestart) - 1).toFixed(2);
                     var timeend = parseFloat(subject.timeend);
-                    console.log(bkkTimeNow + ':' + timebeforstart)
-                    console.log(bkkTimeNow + ':' + timeend)
-                    console.log(data.DayOfWeek + ':' + DayOfWeek)
+                    // console.log(bkkTimeNow + ':' + timebeforstart)
+                    // console.log(bkkTimeNow + ':' + timeend)
+                    // console.log(subject.DayOfWeek + ':' + DayOfWeek)
                     if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && subject.DayOfWeek === DayOfWeek) {
                         var ScanNew = {
                             finger_id: req.body.finger_id,
@@ -196,7 +196,6 @@ exports.getClassByTime = function (req, res, next) {
                             group_name: subject.group_name
                         }
                         req.body = ScanNew;
-                        req.classroom = data;
                         next();
                     } else {
                         return res.status(400).send({
