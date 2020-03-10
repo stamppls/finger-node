@@ -421,16 +421,16 @@ exports.ModifyDataReport = function (req, res) {
     var number = 1;
     var w = 9;
     report.student.forEach(student => {
-        // console.log(student);
         student.week.forEach(week => {
             ws.cell(5, w).string(week.date).style(StyleStudents);
             ws.cell(i, w).string(week.time).style(StyleStudents)
-            w++;
         })
+
         ws.cell(i, 3).number(number).style(StyleStudents);
         ws.cell(i, 4, i, 5, true).string(student.studentid).style(StyleStudents);
         ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents)
         i++;
+        w++;
         number++;
     })
 

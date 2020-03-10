@@ -172,7 +172,7 @@ exports.getClassByTime = function (req, res, next) {
     }
 
     Classroom.find({ group_name: req.student.group_name, DayOfWeek: DayOfWeek }, function (err, data) {
-        console.log(data);
+        // console.log(data);
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -180,26 +180,9 @@ exports.getClassByTime = function (req, res, next) {
             })
         } else {
             if (data) {
-                // var mockup = {
-                //     roomid: '23901',
-                //     year: '2564',
-                //     term: '2',
-                //     DayOfWeek: 'อังคาร',
-                //     timestart: '13:00',
-                //     timeend: '17:00',
-                //     subjectname: 'ไทย',
-                //     subjectid: '222-22-2',
-                //     teachername: 'อาจารย์ ภูรี ลิ้มสกุล',
-                //     group_name: 'CSS45941N'
-                // }
-                // data.push(mockup);
-                // // console.log(data);
                 data.forEach(data => {
                     var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
                     var timeend = parseFloat(data.timeend);
-                    // console.log(bkkTimeNow + ':' + timebeforstart)
-                    // console.log(bkkTimeNow + ':' + timeend)
-                    // console.log(data.DayOfWeek + ':' + DayOfWeek)
                     if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                         var ScanNew = {
                             finger_id: req.body.finger_id,
