@@ -173,7 +173,7 @@ exports.getClassByTime = function (req, res, next) {
 
 
     Classroom.find({ group_name: req.student.group_name }, function (err, data) {
-        console.log(data);
+        // console.log(data);
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -181,28 +181,30 @@ exports.getClassByTime = function (req, res, next) {
             })
         } else {
             if (data) {
-                var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
-                var timeend = parseFloat(data.timeend);
-                // console.log(bkkTimeNow+ ':' +timebeforstart)
-                // console.log(bkkTimeNow+ ':' +timeend)
-                // console.log(data.DayOfWeek+ ':' +DayOfWeek)
-                if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
-                    var ScanNew = {
-                        finger_id: req.body.finger_id,
-                        time: bkkTimeNow,
-                        date: datebkkNow,
-                        subjectid: data.subjectid,
-                        group_name: data.group_name
+                data.forEach(subject => {
+                    var timebeforstart = (parseFloat(subject.timestart) - 1).toFixed(2);
+                    var timeend = parseFloat(subject.timeend);
+                    console.log(bkkTimeNow + ':' + timebeforstart)
+                    console.log(bkkTimeNow + ':' + timeend)
+                    console.log(data.DayOfWeek + ':' + DayOfWeek)
+                    if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && subject.DayOfWeek === DayOfWeek) {
+                        var ScanNew = {
+                            finger_id: req.body.finger_id,
+                            time: bkkTimeNow,
+                            date: datebkkNow,
+                            subjectid: subject.subjectid,
+                            group_name: subject.group_name
+                        }
+                        req.body = ScanNew;
+                        req.classroom = data;
+                        next();
+                    } else {
+                        return res.status(400).send({
+                            status: 400,
+                            message: "Time not found"
+                        })
                     }
-                    req.body = ScanNew;
-                    req.classroom = data;
-                    next();
-                } else {
-                    return res.status(400).send({
-                        status: 400,
-                        message: "Time not found"
-                    })
-                }
+                })
             } else {
                 return res.status(400).send({
                     status: 400,
