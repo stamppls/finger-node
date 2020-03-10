@@ -314,7 +314,7 @@ describe('Reportcheck CRUD routes tests', function () {
                 roomid: "23901",
                 year: "2564",
                 term: "2",
-                DayOfWeek: "เสาร์",
+                DayOfWeek: "อังคาร",
                 timestart: "13:00",
                 timeend: "17:00",
                 subjectname: "คณิตศาสตร์",
@@ -325,8 +325,8 @@ describe('Reportcheck CRUD routes tests', function () {
         classroom.save();
 
         var student = new Student({
-            finger_id1: "3",
-            finger_id2: "4",
+            finger_id1: "1",
+            finger_id2: "2",
             group_name: "CSS45941N",
             studentid: "459415241015",
             firstname: "นาย ภูรี",
@@ -335,7 +335,7 @@ describe('Reportcheck CRUD routes tests', function () {
         student.save();
 
         var scan = new Scan({
-            finger_id: "3",
+            finger_id: "1",
             time: "12:50",
             date: "2/3/2020",
             subjectid: "111-11-1",

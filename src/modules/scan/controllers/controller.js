@@ -173,6 +173,7 @@ exports.getClassByTime = function (req, res, next) {
 
 
     Classroom.find({ group_name: req.student.group_name }, function (err, data) {
+        console.log(data);
         if (err) {
             return res.status(400).send({
                 status: 400,

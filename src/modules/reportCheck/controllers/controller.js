@@ -246,11 +246,11 @@ exports.ModifyDataReport = function (req, res) {
         report.student.push(students)
     })
     // console.log(report.student);
-    report.student.forEach(student => {
-        student.week.forEach(week => {
-            console.log(week);
-        })
-    })
+    // report.student.forEach(student => {
+    //     student.week.forEach(week => {
+    //         console.log(week);
+    //     })
+    // })
 
     //create Workbook,Worksheet
     var wb = new xl.Workbook();
@@ -424,19 +424,12 @@ exports.ModifyDataReport = function (req, res) {
         // console.log(student);
         student.week.forEach(week => {
             ws.cell(5, w).string(week.date).style(StyleStudents);
+            ws.cell(i, w).string(week.time).style(StyleStudents)
             w++;
         })
-
         ws.cell(i, 3).number(number).style(StyleStudents);
         ws.cell(i, 4, i, 5, true).string(student.studentid).style(StyleStudents);
         ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents)
-        ws.cell(i, 9).string(student.week1).style(StyleStudents)
-        ws.cell(i, 10).string(student.week2).style(StyleStudents)
-        ws.cell(i, 11).string(student.week3).style(StyleStudents)
-        ws.cell(i, 12).string(student.week4).style(StyleStudents)
-        ws.cell(i, 13).string(student.week5).style(StyleStudents)
-        ws.cell(i, 14).string(student.week6).style(StyleStudents)
-        ws.cell(i, 15).string(student.week7).style(StyleStudents)
         i++;
         number++;
     })
