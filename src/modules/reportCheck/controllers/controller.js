@@ -193,41 +193,63 @@ exports.ModifyDataReport = function (req, res) {
             studentid: students.studentid,
             firstname: students.firstname,
             lastname: students.lastname,
-            week1: '',
-            week2: '',
-            week3: '',
-            week4: '',
-            week5: '',
-            week6: '',
-            week7: '',
+            week: []
         }
 
         var dateBefore;
         var week = 0;
+        var weeks;
         scan.forEach(scans => {
             if (students.finger_id1 === scans.finger_id || students.finger_id2 === scans.finger_id) {
                 if (dateBefore !== scans.date) {
                     week++;
                     if (week == 1) {
-                        students.week1 = scans.time;
+                        students.week.push({
+                            date: scans.date,
+                            time: scans.time
+                        })
                     } else if (week == 2) {
-                        students.week2 = scans.time;
+                        students.week.push({
+                            date: scans.date,
+                            time: scans.time
+                        })
                     } else if (week == 3) {
-                        students.week3 = scans.time;
+                        students.week.push({
+                            date: scans.date,
+                            time: scans.time
+                        })
                     } else if (week == 4) {
-                        students.week4 = scans.time;
+                        students.week.push({
+                            date: scans.date,
+                            time: scans.time
+                        })
                     } else if (week == 5) {
-                        students.week5 = scans.time;
+                        students.week.push({
+                            date: scans.date,
+                            time: scans.time
+                        })
                     } else if (week == 6) {
-                        students.week6 = scans.time;
+                        students.week.push({
+                            date: scans.date,
+                            time: scans.time
+                        })
                     } else {
-                        students.week7 = scans.time;
+                        students.week.push({
+                            date: scans.date,
+                            time: scans.time
+                        })
                     }
                 }
                 dateBefore = scans.date;
             }
         })
         report.student.push(students)
+    })
+    // console.log(report.student);
+    report.student.forEach(student => {
+        student.week.forEach(week => {
+            console.log(week);
+        })
     })
 
     //create Workbook,Worksheet
@@ -393,18 +415,18 @@ exports.ModifyDataReport = function (req, res) {
     ws.cell(5, 3).string('ลำดับ').style(StyleStudents);
     ws.cell(5, 4, 5, 5, true).string('รหัสประจำตัวนักศึกษา').style(StyleStudents);
     ws.cell(5, 6, 5, 8, true).string('ชื่อ-นามสกุล').style(StyleStudents);
-    ws.cell(5, 9).string('สัปดาห์ที่ 1').style(StyleStudents);
-    ws.cell(5, 10).string('สัปดาห์ที่ 2').style(StyleStudents);
-    ws.cell(5, 11).string('สัปดาห์ที่ 3').style(StyleStudents);
-    ws.cell(5, 12).string('สัปดาห์ที่ 4').style(StyleStudents);
-    ws.cell(5, 13).string('สัปดาห์ที่ 5').style(StyleStudents);
-    ws.cell(5, 14).string('สัปดาห์ที่ 6').style(StyleStudents);
-    ws.cell(5, 15).string('สัปดาห์ที่ 7').style(StyleStudents);
+
 
     var i = 6;
     var number = 1;
+    var w = 9;
     report.student.forEach(student => {
         // console.log(student);
+        student.week.forEach(week => {
+            ws.cell(5, w).string(week.date).style(StyleStudents);
+            w++;
+        })
+
         ws.cell(i, 3).number(number).style(StyleStudents);
         ws.cell(i, 4, i, 5, true).string(student.studentid).style(StyleStudents);
         ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents)
@@ -420,6 +442,6 @@ exports.ModifyDataReport = function (req, res) {
     })
 
     var FileName = report.group_name;
-    wb.write(FileName + '.xlsx' , res)
+    wb.write(FileName + '.xlsx', res);
 }
 
