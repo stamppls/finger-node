@@ -439,9 +439,9 @@ exports.ModifyDataReport = function (req, res) {
         ws.cell(i, 4, i, 5, true).string(student.studentid).style(StyleStudents);
         ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents);
         ws.cell(5, w).string(student.week1.date).style(StyleStudents);
-        ws.cell(5, w).string(student.week2.date).style(StyleStudents);
+        // ws.cell(5, w).string(student.week2.date).style(StyleStudents);
 
-        ws.cell(i, 9).string(student.week1.time).style(StyleStudents);
+        ws.cell(i, w).string(student.week1.time).style(StyleStudents);
         ws.cell(i, w).string(student.week2.time).style(StyleStudents);
         ws.cell(i, w).string(student.week3.time).style(StyleStudents);
         ws.cell(i, w).string(student.week4.time).style(StyleStudents);
