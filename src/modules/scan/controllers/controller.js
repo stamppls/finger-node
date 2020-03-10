@@ -171,7 +171,6 @@ exports.getClassByTime = function (req, res, next) {
         DayOfWeek = "อาทิตย์"
     }
 
-
     Classroom.find({ group_name: req.student.group_name }, function (err, data) {
         // console.log(data);
         if (err) {
@@ -181,20 +180,37 @@ exports.getClassByTime = function (req, res, next) {
             })
         } else {
             if (data) {
-                data.forEach(subject => {
-                    var timebeforstart = (parseFloat(subject.timestart) - 1).toFixed(2);
-                    var timeend = parseFloat(subject.timeend);
+                // var mockup = {
+                //     roomid: '23901',
+                //     year: '2564',
+                //     term: '2',
+                //     DayOfWeek: 'จันทร์',
+                //     timestart: '13:00',
+                //     timeend: '17:00',
+                //     subjectname: 'คณิตศาสตร์',
+                //     subjectid: '111-11-1',
+                //     teachername: 'อาจารย์ ภูรี ลิ้มสกุล',
+                //     group_name: 'CSS45941N'
+                // }
+                // data.push(mockup);
+                // console.log(data);
+                data.forEach(data => {
+                    // console.log(subject);
+                    var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
+                    var timeend = parseFloat(data.timeend);
                     // console.log(bkkTimeNow + ':' + timebeforstart)
                     // console.log(bkkTimeNow + ':' + timeend)
-                    // console.log(subject.DayOfWeek + ':' + DayOfWeek)
-                    if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && subject.DayOfWeek === DayOfWeek) {
+                    // console.log(data.DayOfWeek + ':' + DayOfWeek)
+                    if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
+                        // console.log("Match")
                         var ScanNew = {
                             finger_id: req.body.finger_id,
                             time: bkkTimeNow,
                             date: datebkkNow,
-                            subjectid: subject.subjectid,
-                            group_name: subject.group_name
+                            subjectid: data.subjectid,
+                            group_name: data.group_name
                         }
+                        // console.log(ScanNew);
                         req.body = ScanNew;
                         next();
                     } else {
