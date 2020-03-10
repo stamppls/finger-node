@@ -438,16 +438,22 @@ exports.ModifyDataReport = function (req, res) {
         ws.cell(i, 3).number(number).style(StyleStudents);
         ws.cell(i, 4, i, 5, true).string(student.studentid).style(StyleStudents);
         ws.cell(i, 6, i, 8, true).string(student.firstname + ' ' + student.lastname).style(StyleStudents);
-        ws.cell(5, w).string(student.week1.date).style(StyleStudents);
-        // ws.cell(5, w).string(student.week2.date).style(StyleStudents);
 
-        ws.cell(i, w).string(student.week1.time).style(StyleStudents);
-        ws.cell(i, w).string(student.week2.time).style(StyleStudents);
-        ws.cell(i, w).string(student.week3.time).style(StyleStudents);
-        ws.cell(i, w).string(student.week4.time).style(StyleStudents);
-        ws.cell(i, w).string(student.week5.time).style(StyleStudents);
-        ws.cell(i, w).string(student.week6.time).style(StyleStudents);
-        ws.cell(i, w).string(student.week7.time).style(StyleStudents);
+        ws.cell(5, 9).string(student.week1.date).style(StyleStudents);
+        ws.cell(5, 10).string(student.week2.date).style(StyleStudents);
+        ws.cell(5, 11).string(student.week2.date).style(StyleStudents);
+        ws.cell(5, 12).string(student.week2.date).style(StyleStudents);
+        ws.cell(5, 13).string(student.week2.date).style(StyleStudents);
+        ws.cell(5, 14).string(student.week2.date).style(StyleStudents);
+        ws.cell(5, 15).string(student.week2.date).style(StyleStudents);
+
+        ws.cell(i, 9).string(student.week1.time).style(StyleStudents);
+        ws.cell(i, 10).string(student.week2.time).style(StyleStudents);
+        ws.cell(i, 11).string(student.week3.time).style(StyleStudents);
+        ws.cell(i, 12).string(student.week4.time).style(StyleStudents);
+        ws.cell(i, 13).string(student.week5.time).style(StyleStudents);
+        ws.cell(i, 14).string(student.week6.time).style(StyleStudents);
+        ws.cell(i, 15).string(student.week7.time).style(StyleStudents);
         i++;
         w++;
         number++;
