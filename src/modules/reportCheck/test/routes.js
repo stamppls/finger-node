@@ -314,12 +314,12 @@ describe('Reportcheck CRUD routes tests', function () {
                 roomid: "23901",
                 year: "2564",
                 term: "2",
-                DayOfWeek: "อังคาร",
-                timestart: "13:00",
-                timeend: "17:00",
+                DayOfWeek: "พุธ",
+                timestart: "8:00",
+                timeend: "17:39",
                 subjectname: "คณิตศาสตร์",
                 subjectid: "111-11-1",
-                teachername: "อาจารย์ ภูรี ลิ้มสกุล",
+                teachername: "อารจารย์ เฉลิมชัย",
                 group_name: "CSS45941N"
             })
         classroom.save();

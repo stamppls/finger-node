@@ -3,23 +3,18 @@ var controller = require('../controllers/controller'),
     mq = require('../../core/controllers/rabbitmq'),
     policy = require('../policy/policy');
 module.exports = function (app) {
-    var url = '/api/scans';
-    var urlWithParam = '/api/scans/:scanId';
+    var url = '/api/teachers';
+    var urlWithParam = '/api/teachers/:teacherId';
     app.route(url)//.all(policy.isAllowed)
         .get(controller.getList)
-        .post(
-            controller.getExistTeacher,
-            controller.getExistStudent,
-            controller.getClassByTime,
-            controller.create)
+        .post(controller.create);
 
     app.route(urlWithParam)//.all(policy.isAllowed)
         .get(controller.read)
         .put(controller.update)
         .delete(controller.delete);
 
-    app.param('scanId', controller.getByID);
-
+    app.param('teacherId', controller.getByID);
 
     /**
      * Message Queue

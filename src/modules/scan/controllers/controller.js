@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
     Scan = mongoose.model('Scan'),
     Student = mongoose.model('Student'),
     Classroom = mongoose.model('Classroom'),
+    Teacher = mongoose.model('Teacher'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 
@@ -34,6 +35,7 @@ exports.getList = function (req, res) {
 };
 
 exports.create = function (req, res) {
+    // console.log('Create');
     var newScan = new Scan(req.body);
     newScan.createby = req.user;
     newScan.save(function (err, data) {
@@ -119,9 +121,9 @@ exports.delete = function (req, res) {
     });
 };
 
-exports.getExistStudent = function (req, res, next) {
-    // console.log("getExistStudent")
-    Student.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }] }, function (err, data) {
+exports.getExistTeacher = function (req, res, next) {
+    // console.log("TestTecher");
+    Teacher.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }] }, function (err, data) {
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -129,19 +131,43 @@ exports.getExistStudent = function (req, res, next) {
             });
         } else {
             if (data) {
-                req.student = data;
+                req.teacher = data;
                 next();
             } else {
-                return res.status(400).send({
-                    status: 400,
-                    message: "Student not found!!"
-                })
+                next();
             }
         }
     })
 }
 
+exports.getExistStudent = function (req, res, next) {
+    // console.log("getExistStudent");
+    if (req.teacher) {
+        next();
+    } else {
+        Student.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }] }, function (err, data) {
+            if (err) {
+                return res.status(400).send({
+                    status: 400,
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                if (data) {
+                    req.student = data;
+                    next();
+                } else {
+                    return res.status(400).send({
+                        status: 400,
+                        message: "Student not found!!"
+                    })
+                }
+            }
+        })
+    }
+}
+
 exports.getClassByTime = function (req, res, next) {
+    // console.log('getClassByTime');
     var asiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
     var bkkHourNow = new Date(new Date(asiaTime).getTime()).getHours();
     var bkkMinNow = new Date(new Date(asiaTime).getTime()).getMinutes();
@@ -170,43 +196,85 @@ exports.getClassByTime = function (req, res, next) {
     } else {
         DayOfWeek = "อาทิตย์"
     }
-
-    Classroom.find({ group_name: req.student.group_name, DayOfWeek: DayOfWeek }, function (err, data) {
-        // console.log(data);
-        if (err) {
-            return res.status(400).send({
-                status: 400,
-                message: errorHandler.getErrorMessage
-            })
-        } else {
-            if (data) {
-                data.forEach(data => {
-                    var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
-                    var timeend = parseFloat(data.timeend);
-                    if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
-                        var ScanNew = {
-                            finger_id: req.body.finger_id,
-                            time: bkkTimeNow,
-                            date: datebkkNow,
-                            subjectid: data.subjectid,
-                            group_name: data.group_name
-                        }
-                        req.body = ScanNew;
-                        next();
-                    } else {
-                        return res.status(400).send({
-                            status: 400,
-                            message: "Time not found"
-                        })
-                    }
-                })
-            } else {
+    if (req.teacher) {
+        console.log('Teacher is found')
+        Classroom.find({ teachername: req.teacher.teachername, DayOfWeek: DayOfWeek }, function (err, data) {
+            if (err) {
                 return res.status(400).send({
                     status: 400,
-                    message: "Classroom not found"
+                    message: errorHandler.getErrorMessage
                 })
+            } else {
+                if (data) {
+                    data.forEach(data => {
+                        var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
+                        var timeend = parseFloat(data.timeend);
+                        if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
+                            var ScanNew = {
+                                finger_id: req.body.finger_id,
+                                time: bkkTimeNow,
+                                date: datebkkNow,
+                                subjectid: data.subjectid,
+                                group_name: data.group_name
+                            }
+                            // console.log(ScanNew);
+                            req.body = ScanNew;
+                            next();
+                        } else {
+                            return res.status(400).send({
+                                status: 400,
+                                message: "Time not found"
+                            })
+                        }
+                    })
+                } else {
+                    return res.status(400).send({
+                        status: 400,
+                        message: "Classroom not found"
+                    })
+                }
             }
-        }
-    })
+        })
+    } else {
+        console.log('Student is found')
+        Classroom.find({ group_name: req.student.group_name, DayOfWeek: DayOfWeek }, function (err, data) {
+            // console.log(data);
+            if (err) {
+                return res.status(400).send({
+                    status: 400,
+                    message: errorHandler.getErrorMessage
+                })
+            } else {
+                if (data) {
+                    data.forEach(data => {
+                        var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
+                        var timeend = parseFloat(data.timeend);
+                        if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
+                            var ScanNew = {
+                                finger_id: req.body.finger_id,
+                                time: bkkTimeNow,
+                                date: datebkkNow,
+                                subjectid: data.subjectid,
+                                group_name: data.group_name
+                            }
+                            // console.log(ScanNew);
+                            req.body = ScanNew;
+                            next();
+                        } else {
+                            return res.status(400).send({
+                                status: 400,
+                                message: "Time not found"
+                            })
+                        }
+                    })
+                } else {
+                    return res.status(400).send({
+                        status: 400,
+                        message: "Classroom not found"
+                    })
+                }
+            }
+        })
+    }
 }
 
