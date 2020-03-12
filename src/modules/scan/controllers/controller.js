@@ -158,7 +158,7 @@ exports.getExistStudent = function (req, res, next) {
                 } else {
                     return res.status(400).send({
                         status: 400,
-                        message: "Student not found!!"
+                        message: "Finger not found!!"
                     })
                 }
             }
@@ -207,8 +207,18 @@ exports.getClassByTime = function (req, res, next) {
             } else {
                 if (data) {
                     data.forEach(data => {
-                        var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
-                        var timeend = parseFloat(data.timeend);
+                        //timeStart
+                        var timestartSplit = data.timestart.split(':');
+                        var timestartHour = parseInt(timestartSplit[0]);
+                        var timestartMin = parseInt(timestartSplit[1]);
+                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin).toFixed(2);
+                        // console.log(timebeforstart);
+                        //timeEnd
+                        var timeendSplit = data.timeend.split(':');
+                        var timeendHour = parseInt(timeendSplit[0]);
+                        var timeendMin = parseInt(timeendSplit[1]);
+                        var timeend = parseFloat(timeendHour + '.' + timeendMin);
+                        // console.log(timeend);
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.body.finger_id,
@@ -230,7 +240,7 @@ exports.getClassByTime = function (req, res, next) {
                 } else {
                     return res.status(400).send({
                         status: 400,
-                        message: "Classroom not found"
+                        message: "Subject not found"
                     })
                 }
             }
@@ -270,7 +280,7 @@ exports.getClassByTime = function (req, res, next) {
                 } else {
                     return res.status(400).send({
                         status: 400,
-                        message: "Classroom not found"
+                        message: "Subject not found"
                     })
                 }
             }
