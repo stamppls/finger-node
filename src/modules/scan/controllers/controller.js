@@ -168,14 +168,22 @@ exports.getExistStudent = function (req, res, next) {
 
 exports.getClassByTime = function (req, res, next) {
     // console.log('getClassByTime');
+    //timeNow
     var asiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" });
     var bkkHourNow = new Date(new Date(asiaTime).getTime()).getHours();
     var bkkMinNow = new Date(new Date(asiaTime).getTime()).getMinutes();
-    var bkkTimeNow = parseFloat(bkkHourNow.toString() + "." + bkkMinNow.toString());
+    var bkkTimeNow = parseFloat(bkkHourNow + "." + bkkMinNow);
+    
+    //convert Float to String
+    var bkkTimeNowSplit = ((bkkTimeNow.toString())).split('.');
+    var timeNow = bkkTimeNowSplit[0] + ':' + bkkTimeNowSplit[1];
 
+
+    //date Of week
     var bkkDateNow = new Date(asiaTime);
     var DayOfWeek = bkkDateNow.getDay();
 
+    //d/m/y
     var bkkday = bkkDateNow.getDate();
     var bkkmonth = bkkDateNow.getUTCMonth() + 1;
     var bkkyear = bkkDateNow.getUTCFullYear();
@@ -223,11 +231,12 @@ exports.getClassByTime = function (req, res, next) {
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.body.finger_id,
-                                time: bkkTimeNow,
+                                time: timeNow,
                                 date: datebkkNow,
                                 subjectid: data.subjectid,
                                 group_name: data.group_name
                             }
+                            // console.log(ScanNew);
                             req.body = ScanNew;
                             next();
                         } else {
@@ -273,7 +282,7 @@ exports.getClassByTime = function (req, res, next) {
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.body.finger_id,
-                                time: bkkTimeNow,
+                                time: timeNow,
                                 date: datebkkNow,
                                 subjectid: data.subjectid,
                                 group_name: data.group_name
