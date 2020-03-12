@@ -17,11 +17,11 @@ var ScanSchema = new Schema({
         type: String,
         required: 'Please fill a Scan time',
     },
-    subjectid:{
+    subjectid: {
         type: String,
         required: 'Please fill a Scan subjectid',
     },
-    group_name:{
+    group_name: {
         type: String,
         required: 'Please fill a Scan group_name',
     },

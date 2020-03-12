@@ -102,6 +102,7 @@ describe('Scan CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
+                // console.log(resp);
                 assert.equal(resp.data.finger_id, mockup.finger_id);
                 assert.notEqual(resp.data.time, null);
                 assert.notEqual(resp.data.date, null);
