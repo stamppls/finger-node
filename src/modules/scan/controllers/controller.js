@@ -213,6 +213,7 @@ exports.getClassByTime = function (req, res, next) {
                         var timestartMin = parseInt(timestartSplit[1]);
                         var timebeforstart = parseFloat(timestartHour + '.' + timestartMin).toFixed(2);
                         // console.log(timebeforstart);
+
                         //timeEnd
                         var timeendSplit = data.timeend.split(':');
                         var timeendHour = parseInt(timeendSplit[0]);
@@ -227,7 +228,6 @@ exports.getClassByTime = function (req, res, next) {
                                 subjectid: data.subjectid,
                                 group_name: data.group_name
                             }
-                            // console.log(ScanNew);
                             req.body = ScanNew;
                             next();
                         } else {
@@ -257,8 +257,19 @@ exports.getClassByTime = function (req, res, next) {
             } else {
                 if (data) {
                     data.forEach(data => {
-                        var timebeforstart = (parseFloat(data.timestart) - 1).toFixed(2);
-                        var timeend = parseFloat(data.timeend);
+                        //timeStart
+                        var timestartSplit = data.timestart.split(':');
+                        var timestartHour = parseInt(timestartSplit[0]);
+                        var timestartMin = parseInt(timestartSplit[1]);
+                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin).toFixed(2);
+                        // console.log(timebeforstart);
+
+                        //timeEnd
+                        var timeendSplit = data.timeend.split(':');
+                        var timeendHour = parseInt(timeendSplit[0]);
+                        var timeendMin = parseInt(timeendSplit[1]);
+                        var timeend = parseFloat(timeendHour + '.' + timeendMin);
+                        // console.log(timeend);
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.body.finger_id,
