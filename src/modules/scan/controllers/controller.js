@@ -122,8 +122,9 @@ exports.delete = function (req, res) {
 };
 
 exports.getExistTeacher = function (req, res, next) {
+    // console.log(req.body);
     // console.log("TestTecher");
-    Teacher.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }] }, function (err, data) {
+    Teacher.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }, { phonenumber: req.body.phonenumber }] }, function (err, data) {
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -145,7 +146,7 @@ exports.getExistStudent = function (req, res, next) {
     if (req.teacher) {
         next();
     } else {
-        Student.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }] }, function (err, data) {
+        Student.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }, { phonenumber: req.body.phonenumber }] }, function (err, data) {
             if (err) {
                 return res.status(400).send({
                     status: 400,
@@ -173,7 +174,7 @@ exports.getClassByTime = function (req, res, next) {
     var bkkHourNow = new Date(new Date(asiaTime).getTime()).getHours();
     var bkkMinNow = new Date(new Date(asiaTime).getTime()).getMinutes();
     var bkkTimeNow = parseFloat(bkkHourNow + "." + bkkMinNow);
-    
+
     //convert Float to String
     var bkkTimeNowSplit = ((bkkTimeNow.toString())).split('.');
     var timeNow = bkkTimeNowSplit[0] + ':' + bkkTimeNowSplit[1];
@@ -230,7 +231,7 @@ exports.getClassByTime = function (req, res, next) {
                         // console.log(timeend);
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
-                                finger_id: req.body.finger_id,
+                                finger_id: req.teacher.finger_id1,
                                 time: timeNow,
                                 date: datebkkNow,
                                 subjectid: data.subjectid,
@@ -257,7 +258,6 @@ exports.getClassByTime = function (req, res, next) {
     } else {
         console.log('Student is found')
         Classroom.find({ group_name: req.student.group_name, DayOfWeek: DayOfWeek }, function (err, data) {
-            // console.log(data);
             if (err) {
                 return res.status(400).send({
                     status: 400,
@@ -281,7 +281,7 @@ exports.getClassByTime = function (req, res, next) {
                         // console.log(timeend);
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
-                                finger_id: req.body.finger_id,
+                                finger_id: req.student.finger_id1,
                                 time: timeNow,
                                 date: datebkkNow,
                                 subjectid: data.subjectid,

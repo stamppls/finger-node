@@ -18,6 +18,7 @@ describe('Student CRUD routes tests', function () {
         mockup = {
             finger_id1: "1",
             finger_id2: "2",
+            phonenumber: "0957594433",
             group_name: "CSS45941N",
             studentid: "459415241015",
             firstname: "นาย ภูรี",
@@ -75,6 +76,7 @@ describe('Student CRUD routes tests', function () {
                         assert.equal(resp.status, 200);
                         assert.equal(resp.data.finger_id1, mockup.finger_id1);
                         assert.equal(resp.data.finger_id2, mockup.finger_id2);
+                        assert.equal(resp.data.phonenumber, mockup.phonenumber);
                         assert.equal(resp.data.group_name, mockup.group_name);
                         assert.equal(resp.data.studentid, mockup.studentid);
                         assert.equal(resp.data.firstname, mockup.firstname);
@@ -97,6 +99,7 @@ describe('Student CRUD routes tests', function () {
                 var resp = res.body;
                 assert.equal(resp.data.finger_id1, mockup.finger_id1);
                 assert.equal(resp.data.finger_id2, mockup.finger_id2);
+                assert.equal(resp.data.phonenumber, mockup.phonenumber);
                 assert.equal(resp.data.group_name, mockup.group_name);
                 assert.equal(resp.data.studentid, mockup.studentid);
                 assert.equal(resp.data.firstname, mockup.firstname);

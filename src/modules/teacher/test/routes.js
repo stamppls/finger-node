@@ -18,6 +18,7 @@ describe('Teacher CRUD routes tests', function () {
         mockup = {
             finger_id1: '1',
             finger_id2: '2',
+            phonenumber: '0957594433',
             teachername: 'อาจารย์ เฉลิมชัย',
 
         };

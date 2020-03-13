@@ -314,7 +314,7 @@ describe('Reportcheck CRUD routes tests', function () {
                 roomid: "23901",
                 year: "2564",
                 term: "2",
-                DayOfWeek: "พฤหัสบดี",
+                DayOfWeek: "ศุกร์",
                 timestart: "8:39",
                 timeend: "23:59",
                 subjectname: "คณิตศาสตร์",
@@ -327,6 +327,7 @@ describe('Reportcheck CRUD routes tests', function () {
         var student = new Student({
             finger_id1: "1",
             finger_id2: "2",
+            phonenumber: "0957594433",
             group_name: "CSS45941N",
             studentid: "459415241015",
             firstname: "นาย ภูรี",

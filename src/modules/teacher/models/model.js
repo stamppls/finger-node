@@ -17,6 +17,9 @@ var TeacherSchema = new Schema({
         type: String,
         required: 'Please fill a Teacher teachername',
     },
+    phonenumber: {
+        type: String
+    },
     created: {
         type: Date,
         default: Date.now

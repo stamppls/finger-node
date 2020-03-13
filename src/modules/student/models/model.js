@@ -25,6 +25,9 @@ var StudentSchema = new Schema({
         type: String,
         required: 'Please fill a Student finger_id2'
     },
+    phonenumber: {
+        type: String
+    },
     group_name: {
         type: String,
         required: 'Please fill a Student group_name'
