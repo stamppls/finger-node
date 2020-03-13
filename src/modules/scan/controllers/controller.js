@@ -220,7 +220,7 @@ exports.getClassByTime = function (req, res, next) {
                         var timestartSplit = data.timestart.split(':');
                         var timestartHour = parseInt(timestartSplit[0]);
                         var timestartMin = parseInt(timestartSplit[1]);
-                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin).toFixed(2);
+                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin);
                         // console.log(timebeforstart);
 
                         //timeEnd
@@ -229,6 +229,7 @@ exports.getClassByTime = function (req, res, next) {
                         var timeendMin = parseInt(timeendSplit[1]);
                         var timeend = parseFloat(timeendHour + '.' + timeendMin);
                         // console.log(timeend);
+                        // console.log(bkkTimeNow)
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.teacher.finger_id1,
@@ -270,7 +271,7 @@ exports.getClassByTime = function (req, res, next) {
                         var timestartSplit = data.timestart.split(':');
                         var timestartHour = parseInt(timestartSplit[0]);
                         var timestartMin = parseInt(timestartSplit[1]);
-                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin).toFixed(2);
+                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin);
                         // console.log(timebeforstart);
 
                         //timeEnd
@@ -279,6 +280,7 @@ exports.getClassByTime = function (req, res, next) {
                         var timeendMin = parseInt(timeendSplit[1]);
                         var timeend = parseFloat(timeendHour + '.' + timeendMin);
                         // console.log(timeend);
+                        // console.log(bkkTimeNow);
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.student.finger_id1,

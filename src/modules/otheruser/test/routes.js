@@ -6,32 +6,25 @@ var request = require('supertest'),
     jwt = require('jsonwebtoken'),
     mongoose = require('mongoose'),
     app = require('../../../config/express'),
-    Scan = mongoose.model('Scan'),
-    Student = mongoose.model('Student'),
-    Classroom = mongoose.model('Classroom'),
-    Reportcheck = mongoose.model('Reportcheck'),
-    Teacher = mongoose.model('Teacher');
+    Otheruser = mongoose.model('Otheruser');
 
 var credentials,
     token,
     mockup,
-    mockupTeacher,
-    mockupOtherUser;
+    mockupCheck;
 
-describe('Scan CRUD routes tests', function () {
+describe('Otheruser CRUD routes tests', function () {
+
     before(function (done) {
         mockup = {
-            finger_id: "3",
-            // phonenumber: "0957594433"
+            identificationcode: '459415241015',
+            firstname: 'ประยุทธ',
+            lastname: 'จันทร์โอชา'
         };
 
-        mockupTeacher = new Teacher({
-            finger_id1: "3",
-            finger_id2: "4",
-            phonenumber: "0972984409",
-            teachername: "อารจารย์ เฉลิมชัย"
-        })
-        mockupTeacher.save();
+        mockupCheck = {
+            identificationcode: '459415241015',
+        };
 
         credentials = {
             username: 'username',
@@ -47,9 +40,9 @@ describe('Scan CRUD routes tests', function () {
         done();
     });
 
-    it('should be Scan get use token', (done) => {
+    it('should be Otheruser get use token', (done) => {
         request(app)
-            .get('/api/scans')
+            .get('/api/otherusers')
             .set('Authorization', 'Bearer ' + token)
             .expect(200)
             .end((err, res) => {
@@ -61,10 +54,10 @@ describe('Scan CRUD routes tests', function () {
             });
     });
 
-    it('should be Scan get by id', function (done) {
+    it('should be Otheruser get by id', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/otherusers')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -74,7 +67,7 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 request(app)
-                    .get('/api/scans/' + resp.data._id)
+                    .get('/api/otherusers/' + resp.data._id)
                     .set('Authorization', 'Bearer ' + token)
                     .expect(200)
                     .end(function (err, res) {
@@ -83,20 +76,18 @@ describe('Scan CRUD routes tests', function () {
                         }
                         var resp = res.body;
                         assert.equal(resp.status, 200);
-                        assert.notEqual(resp.data.finger_id, null);
-                        assert.notEqual(resp.data.time, null);
-                        assert.notEqual(resp.data.date, null);
-                        assert.notEqual(resp.data.subjectid, null);
-                        assert.notEqual(resp.data.group_name, null);
+                        assert.equal(resp.data.identificationcode, mockup.identificationcode);
+                        assert.equal(resp.data.firstname, mockup.firstname);
+                        assert.equal(resp.data.lastname, mockup.lastname);
                         done();
                     });
             });
 
     });
 
-    it('should be Scan post use token', (done) => {
+    it('should be Otheruser post use token', (done) => {
         request(app)
-            .post('/api/scans')
+            .post('/api/otherusers')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -105,20 +96,17 @@ describe('Scan CRUD routes tests', function () {
                     return done(err);
                 }
                 var resp = res.body;
-                assert.equal(resp.status, 200);
-                assert.notEqual(resp.data.finger_id, null);
-                assert.notEqual(resp.data.time, null);
-                assert.notEqual(resp.data.date, null);
-                assert.notEqual(resp.data.subjectid, null);
-                assert.notEqual(resp.data.group_name, null);
+                assert.equal(resp.data.identificationcode, mockup.identificationcode);
+                assert.equal(resp.data.firstname, mockup.firstname);
+                assert.equal(resp.data.lastname, mockup.lastname);
                 done();
             });
     });
 
-    xit('should be scan put use token', function (done) {
+    it('should be otheruser put use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/otherusers')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -128,10 +116,12 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 var update = {
-                    name: 'name update'
+                    identificationcode: '459415311544',
+                    firstname: 'ประวิตร',
+                    lastname: 'วงสุวรรณ',
                 }
                 request(app)
-                    .put('/api/scans/' + resp.data._id)
+                    .put('/api/otherusers/' + resp.data._id)
                     .set('Authorization', 'Bearer ' + token)
                     .send(update)
                     .expect(200)
@@ -140,18 +130,19 @@ describe('Scan CRUD routes tests', function () {
                             return done(err);
                         }
                         var resp = res.body;
-                        assert.equal(resp.data.finger_id, mockup.finger_id);
-                        assert.notEqual(resp.data.timeScan, null);
+                        assert.equal(resp.data.identificationcode, update.identificationcode);
+                        assert.equal(resp.data.firstname, update.firstname);
+                        assert.equal(resp.data.lastname, update.lastname);
                         done();
                     });
             });
 
     });
 
-    xit('should be scan delete use token', function (done) {
+    xit('should be otheruser delete use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/otherusers')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -161,7 +152,7 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 request(app)
-                    .delete('/api/scans/' + resp.data._id)
+                    .delete('/api/otherusers/' + resp.data._id)
                     .set('Authorization', 'Bearer ' + token)
                     .expect(200)
                     .end(done);
@@ -169,9 +160,9 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
-    xit('should be scan get not use token', (done) => {
+    xit('should be otheruser get not use token', (done) => {
         request(app)
-            .get('/api/scans')
+            .get('/api/otherusers')
             .expect(403)
             .expect({
                 status: 403,
@@ -180,10 +171,10 @@ describe('Scan CRUD routes tests', function () {
             .end(done);
     });
 
-    xit('should be scan post not use token', function (done) {
+    xit('should be otheruser post not use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/otherusers')
             .send(mockup)
             .expect(403)
             .expect({
@@ -194,10 +185,10 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
-    xit('should be scan put not use token', function (done) {
+    xit('should be otheruser put not use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/otherusers')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -210,7 +201,7 @@ describe('Scan CRUD routes tests', function () {
                     name: 'name update'
                 }
                 request(app)
-                    .put('/api/scans/' + resp.data._id)
+                    .put('/api/otherusers/' + resp.data._id)
                     .send(update)
                     .expect(403)
                     .expect({
@@ -222,10 +213,10 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
-    xit('should be scan delete not use token', function (done) {
+    xit('should be otheruser delete not use token', function (done) {
 
         request(app)
-            .post('/api/scans')
+            .post('/api/otherusers')
             .set('Authorization', 'Bearer ' + token)
             .send(mockup)
             .expect(200)
@@ -235,7 +226,7 @@ describe('Scan CRUD routes tests', function () {
                 }
                 var resp = res.body;
                 request(app)
-                    .delete('/api/scans/' + resp.data._id)
+                    .delete('/api/otherusers/' + resp.data._id)
                     .expect(403)
                     .expect({
                         status: 403,
@@ -246,8 +237,34 @@ describe('Scan CRUD routes tests', function () {
 
     });
 
+    it('should be Otheruser post use token', (done) => {
+        var mockupOther = new Otheruser({
+            identificationcode: '459415241015',
+            firstname: 'ประยุทธ',
+            lastname: 'จันทร์โอชา'
+        });
+        mockupOther.save();
+
+        request(app)
+            .post('/api/otherusers/checked')
+            .set('Authorization', 'Bearer ' + token)
+            .send(mockupCheck)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    return done(err);
+                }
+                var resp = res.body;
+                assert.equal(resp.status, 200);
+                assert.equal(resp.data.identificationcode, mockup.identificationcode);
+                assert.equal(resp.data.firstname, mockup.firstname);
+                assert.equal(resp.data.lastname, mockup.lastname);
+                done();
+            });
+    });
+
     afterEach(function (done) {
-        Scan.deleteMany().exec(done);
+        Otheruser.deleteMany().exec(done);
     });
 
 });
