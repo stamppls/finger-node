@@ -122,47 +122,80 @@ exports.delete = function (req, res) {
 };
 
 exports.getExistTeacherAndStudent = function (req, res, next) {
-    // console.log("TestTecher");
-    Teacher.findOne({
-        $or: [{ finger_id1: req.body.finger_id },
-        { finger_id2: req.body.finger_id },
-        { phonenumber: req.body.phonenumber }]
-    }, function (err, data) {
-        if (err) {
-            return res.status(400).send({
-                status: 400,
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            if (data) {
-                req.teacher = data;
-                next();
+        // console.log("getExistTeacherAndStudent");
+    if (req.body.finger_id) {
+        Teacher.findOne({
+            $or: [{ finger_id1: req.body.finger_id },
+            { finger_id2: req.body.finger_id }]
+        }, function (err, data) {
+            if (err) {
+                return res.status(400).send({
+                    status: 400,
+                    message: errorHandler.getErrorMessage(err)
+                });
             } else {
-                Student.findOne({
-                    $or: [{ finger_id1: req.body.finger_id },
-                    { finger_id2: req.body.finger_id },
-                    { phonenumber: req.body.phonenumber }]
-                }, function (err, data) {
-                    if (err) {
-                        return res.status(400).send({
-                            status: 400,
-                            message: errorHandler.getErrorMessage(err)
-                        });
-                    } else {
-                        if (data) {
-                            req.student = data;
-                            next();
-                        } else {
+                if (data) {
+                    req.teacher = data;
+                    next();
+                } else {
+                    Student.findOne({
+                        $or: [{ finger_id1: req.body.finger_id },
+                        { finger_id2: req.body.finger_id }]
+                    }, function (err, data) {
+                        if (err) {
                             return res.status(400).send({
                                 status: 400,
-                                message: "Finger or PhoneNumber not found"
-                            })
+                                message: errorHandler.getErrorMessage(err)
+                            });
+                        } else {
+                            if (data) {
+                                req.student = data;
+                                next();
+                            } else {
+                                return res.status(400).send({
+                                    status: 400,
+                                    message: "Finger or PhoneNumber not found"
+                                })
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
-        }
-    })
+        })
+    } else {
+        Teacher.findOne({ phonenumber: req.body.phonenumber }, function (err, data) {
+            if (err) {
+                return res.status(400).send({
+                    status: 400,
+                    message: errorHandler.getErrorMessage(err)
+                });
+            } else {
+                if (data) {
+                    req.teacher = data;
+                    next();
+                } else {
+                    Student.findOne({ phonenumber: req.body.phonenumber }, function (err, data) {
+                        if (err) {
+                            return res.status(400).send({
+                                status: 400,
+                                message: errorHandler.getErrorMessage(err)
+                            });
+                        } else {
+                            if (data) {
+                                req.student = data;
+                                next();
+                            } else {
+                                return res.status(400).send({
+                                    status: 400,
+                                    message: "Finger or PhoneNumber not found"
+                                })
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
 }
 
 // exports.getExistStudent = function (req, res, next) {
