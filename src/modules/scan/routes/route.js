@@ -8,8 +8,8 @@ module.exports = function (app) {
     app.route(url)//.all(policy.isAllowed)
         .get(controller.getList)
         .post(
-            controller.getExistTeacher,
-            controller.getExistStudent,
+            controller.getExistTeacherAndStudent,
+            // controller.getExistStudent,
             controller.getClassByTime,
             controller.create)
 

@@ -121,10 +121,13 @@ exports.delete = function (req, res) {
     });
 };
 
-exports.getExistTeacher = function (req, res, next) {
-    // console.log(req.body);
+exports.getExistTeacherAndStudent = function (req, res, next) {
     // console.log("TestTecher");
-    Teacher.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }, { phonenumber: req.body.phonenumber }] }, function (err, data) {
+    Teacher.findOne({
+        $or: [{ finger_id1: req.body.finger_id },
+        { finger_id2: req.body.finger_id },
+        { phonenumber: req.body.phonenumber }]
+    }, function (err, data) {
         if (err) {
             return res.status(400).send({
                 status: 400,
@@ -135,37 +138,41 @@ exports.getExistTeacher = function (req, res, next) {
                 req.teacher = data;
                 next();
             } else {
-                next();
+                Student.findOne({
+                    $or: [{ finger_id1: req.body.finger_id },
+                    { finger_id2: req.body.finger_id },
+                    { phonenumber: req.body.phonenumber }]
+                }, function (err, data) {
+                    if (err) {
+                        return res.status(400).send({
+                            status: 400,
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        if (data) {
+                            req.student = data;
+                            next();
+                        } else {
+                            return res.status(400).send({
+                                status: 400,
+                                message: "Finger or PhoneNumber not found"
+                            })
+                        }
+                    }
+                })
             }
         }
     })
 }
 
-exports.getExistStudent = function (req, res, next) {
-    // console.log("getExistStudent");
-    if (req.teacher) {
-        next();
-    } else {
-        Student.findOne({ $or: [{ finger_id1: req.body.finger_id }, { finger_id2: req.body.finger_id }, { phonenumber: req.body.phonenumber }] }, function (err, data) {
-            if (err) {
-                return res.status(400).send({
-                    status: 400,
-                    message: errorHandler.getErrorMessage(err)
-                });
-            } else {
-                if (data) {
-                    req.student = data;
-                    next();
-                } else {
-                    return res.status(400).send({
-                        status: 400,
-                        message: "Finger or PhoneNumber not found"
-                    })
-                }
-            }
-        })
-    }
-}
+// exports.getExistStudent = function (req, res, next) {
+//     // console.log("getExistStudent");
+//     if (req.teacher) {
+//         next();
+//     } else {
+
+//     }
+// }
 
 exports.getClassByTime = function (req, res, next) {
     // console.log('getClassByTime');
@@ -272,15 +279,15 @@ exports.getClassByTime = function (req, res, next) {
                         var timestartHour = parseInt(timestartSplit[0]);
                         var timestartMin = parseInt(timestartSplit[1]);
                         var timebeforstart = parseFloat(timestartHour + '.' + timestartMin);
-                        // console.log(timebeforstart);
+                        // console.log(bkkTimeNow + ' : ' + timebeforstart);
 
                         //timeEnd
                         var timeendSplit = data.timeend.split(':');
                         var timeendHour = parseInt(timeendSplit[0]);
                         var timeendMin = parseInt(timeendSplit[1]);
                         var timeend = parseFloat(timeendHour + '.' + timeendMin);
-                        // console.log(timeend);
-                        // console.log(bkkTimeNow);
+                        // console.log(bkkTimeNow + ' : ' + timeend);
+                        // console.log(data.DayOfWeek + ' : ' + DayOfWeek);
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.student.finger_id1,

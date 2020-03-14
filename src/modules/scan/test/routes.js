@@ -15,13 +15,12 @@ var request = require('supertest'),
 var credentials,
     token,
     mockup,
-    mockupTeacher,
-    mockupOtherUser;
+    mockupTeacher;
 
 describe('Scan CRUD routes tests', function () {
     before(function (done) {
         mockup = {
-            finger_id: "2",
+            finger_id: "3",
             // phonenumber: "0957594433"
         };
 
@@ -104,6 +103,7 @@ describe('Scan CRUD routes tests', function () {
                 if (err) {
                     return done(err);
                 }
+                console.log(res.body);
                 var resp = res.body;
                 assert.equal(resp.status, 200);
                 assert.notEqual(resp.data.finger_id, null);
