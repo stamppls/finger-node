@@ -255,6 +255,7 @@ exports.getClassByTime = function (req, res, next) {
                 })
             } else {
                 if (data) {
+                    console.log('222');
                     data.forEach(data => {
                         //timeStart
                         var timestartSplit = data.timestart.split(':');
@@ -289,6 +290,7 @@ exports.getClassByTime = function (req, res, next) {
                         }
                     })
                 } else {
+                    console.log('333');
                     return res.status(400).send({
                         status: 400,
                         message: "Subject not found"
