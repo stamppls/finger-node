@@ -159,7 +159,7 @@ exports.getExistStudent = function (req, res, next) {
                 } else {
                     return res.status(400).send({
                         status: 400,
-                        message: "Finger not found!!"
+                        message: "Finger or PhoneNumber not found"
                     })
                 }
             }

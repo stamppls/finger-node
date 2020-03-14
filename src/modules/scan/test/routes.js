@@ -21,7 +21,7 @@ var credentials,
 describe('Scan CRUD routes tests', function () {
     before(function (done) {
         mockup = {
-            finger_id: "3",
+            finger_id: "2",
             // phonenumber: "0957594433"
         };
 
