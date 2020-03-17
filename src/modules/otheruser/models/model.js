@@ -18,6 +18,10 @@ var OtheruserSchema = new Schema({
         type: String,
         required: 'Please fill a Otheruser lastname',
     },
+    roomid: {
+        type: String,
+        required: 'Please fill a Otheruser roomid'
+    },
     created: {
         type: Date,
         default: Date.now

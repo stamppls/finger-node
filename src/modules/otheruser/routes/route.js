@@ -17,7 +17,7 @@ module.exports = function (app) {
     app.param('otheruserId', controller.getByID);
 
     app.route('/api/otherusers/checked')
-        .post(controller.checkOtherUser, controller.responseUser);
+        .post(controller.checkOtherUser,controller.checkRoom, controller.responseUser);
     /**
      * Message Queue
      * exchange : ชื่อเครือข่ายไปรษณีย์  เช่น casan

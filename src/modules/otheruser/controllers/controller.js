@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
     model = require('../models/model'),
     mq = require('../../core/controllers/rabbitmq'),
     Otheruser = mongoose.model('Otheruser'),
+    Room = mongoose.model('Room'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 
@@ -132,7 +133,27 @@ exports.checkOtherUser = function (req, res, next) {
             } else {
                 return res.status(400).send({
                     status: 400,
-                    message: "Otheruser not found!!"
+                    message: "Password not found!!"
+                })
+            }
+        }
+    })
+};
+
+exports.checkRoom = function (req, res, next) {
+    Room.findOne({ roomid: req.Otheruser.roomid }, function (err, data) {
+        if (err) {
+            return res.status(400).send({
+                status: 400,
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            if (data) {
+                next();
+            } else {
+                return res.status(400).send({
+                    status: 400,
+                    message: "User not found the room!!"
                 })
             }
         }

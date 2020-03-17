@@ -6,7 +6,8 @@ var request = require('supertest'),
     jwt = require('jsonwebtoken'),
     mongoose = require('mongoose'),
     app = require('../../../config/express'),
-    Otheruser = mongoose.model('Otheruser');
+    Otheruser = mongoose.model('Otheruser'),
+    Room = mongoose.model('Room');
 
 var credentials,
     token,
@@ -19,13 +20,23 @@ describe('Otheruser CRUD routes tests', function () {
         mockup = {
             identificationcode: '459415241015',
             firstname: 'ประยุทธ',
-            lastname: 'จันทร์โอชา'
+            lastname: 'จันทร์โอชา',
+            roomid: '23920'
         };
 
         mockupCheck = {
             identificationcode: '459415241015',
         };
 
+        var room = new Room({
+            roomid: '23920',
+            year: '2563',
+            term: '2',
+            build: '23',
+            floor: '9',
+        });
+        room.save();
+        
         credentials = {
             username: 'username',
             password: 'password',
@@ -79,6 +90,7 @@ describe('Otheruser CRUD routes tests', function () {
                         assert.equal(resp.data.identificationcode, mockup.identificationcode);
                         assert.equal(resp.data.firstname, mockup.firstname);
                         assert.equal(resp.data.lastname, mockup.lastname);
+                        assert.equal(resp.data.roomid, mockup.roomid);
                         done();
                     });
             });
@@ -99,6 +111,7 @@ describe('Otheruser CRUD routes tests', function () {
                 assert.equal(resp.data.identificationcode, mockup.identificationcode);
                 assert.equal(resp.data.firstname, mockup.firstname);
                 assert.equal(resp.data.lastname, mockup.lastname);
+                assert.equal(resp.data.roomid, mockup.roomid);
                 done();
             });
     });
@@ -119,6 +132,7 @@ describe('Otheruser CRUD routes tests', function () {
                     identificationcode: '459415311544',
                     firstname: 'ประวิตร',
                     lastname: 'วงสุวรรณ',
+                    roomid: '23910'
                 }
                 request(app)
                     .put('/api/otherusers/' + resp.data._id)
@@ -133,6 +147,7 @@ describe('Otheruser CRUD routes tests', function () {
                         assert.equal(resp.data.identificationcode, update.identificationcode);
                         assert.equal(resp.data.firstname, update.firstname);
                         assert.equal(resp.data.lastname, update.lastname);
+                        assert.equal(resp.data.roomid, update.roomid);
                         done();
                     });
             });
@@ -241,7 +256,8 @@ describe('Otheruser CRUD routes tests', function () {
         var mockupOther = new Otheruser({
             identificationcode: '459415241015',
             firstname: 'ประยุทธ',
-            lastname: 'จันทร์โอชา'
+            lastname: 'จันทร์โอชา',
+            roomid: '23920'
         });
         mockupOther.save();
 
@@ -259,6 +275,7 @@ describe('Otheruser CRUD routes tests', function () {
                 assert.equal(resp.data.identificationcode, mockup.identificationcode);
                 assert.equal(resp.data.firstname, mockup.firstname);
                 assert.equal(resp.data.lastname, mockup.lastname);
+                assert.equal(resp.data.roomid, mockup.roomid);
                 done();
             });
     });
