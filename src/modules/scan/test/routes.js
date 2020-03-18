@@ -20,8 +20,8 @@ var credentials,
 describe('Scan CRUD routes tests', function () {
     before(function (done) {
         mockup = {
-            // finger_id: "5",
-            phonenumber: "0957594433"
+            finger_id: "5"
+            // phonenumber: "0957594433"
         };
 
         mockupTeacher = new Teacher({
