@@ -122,7 +122,7 @@ exports.delete = function (req, res) {
 };
 
 exports.getExistTeacherAndStudent = function (req, res, next) {
-        // console.log("getExistTeacherAndStudent");
+    // console.log("getExistTeacherAndStudent");
     if (req.body.finger_id) {
         Teacher.findOne({
             $or: [{ finger_id1: req.body.finger_id },
@@ -255,22 +255,21 @@ exports.getClassByTime = function (req, res, next) {
                 })
             } else {
                 if (data) {
-                    console.log('222');
                     data.forEach(data => {
                         //timeStart
                         var timestartSplit = data.timestart.split(':');
                         var timestartHour = parseInt(timestartSplit[0]);
                         var timestartMin = parseInt(timestartSplit[1]);
-                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin);
-                        // console.log(timebeforstart);
+                        var timebeforstart = (parseFloat(timestartHour + '.' + timestartMin) - 1);
+                        console.log(timebeforstart);
 
                         //timeEnd
                         var timeendSplit = data.timeend.split(':');
                         var timeendHour = parseInt(timeendSplit[0]);
                         var timeendMin = parseInt(timeendSplit[1]);
                         var timeend = parseFloat(timeendHour + '.' + timeendMin);
-                        // console.log(timeend);
-                        // console.log(bkkTimeNow)
+                        console.log(timeend);
+                        console.log(bkkTimeNow);
                         if (bkkTimeNow >= timebeforstart && bkkTimeNow <= timeend && data.DayOfWeek === DayOfWeek) {
                             var ScanNew = {
                                 finger_id: req.teacher.finger_id1,
@@ -313,7 +312,7 @@ exports.getClassByTime = function (req, res, next) {
                         var timestartSplit = data.timestart.split(':');
                         var timestartHour = parseInt(timestartSplit[0]);
                         var timestartMin = parseInt(timestartSplit[1]);
-                        var timebeforstart = parseFloat(timestartHour + '.' + timestartMin);
+                        var timebeforstart = (parseFloat(timestartHour + '.' + timestartMin) - 1);
                         // console.log(bkkTimeNow + ' : ' + timebeforstart);
 
                         //timeEnd
