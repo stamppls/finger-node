@@ -21,7 +21,7 @@
     "express": "^4.16.3",
     "express-jwt": "5.3.0",
     "glob": "^7.1.2",
-    "jsreport": "^2.6.1",
+    "jsreport": "^3.9.0",
     "lodash": "^4.17.5",
     "mongoose": "^5.0.12",
     "node-xlsx": "^0.15.0"
